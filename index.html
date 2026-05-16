@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -90,7 +89,6 @@ body{
     margin-left:15px;
     margin-top:10px;
     display:none;
-    animation:fade 0.3s ease;
 }
 
 .submenu div{
@@ -117,7 +115,6 @@ body{
     min-height:100vh;
     padding:60px;
     display:none;
-    animation:fade 0.4s ease;
 }
 
 .activa{
@@ -126,20 +123,6 @@ body{
     align-items:center;
     flex-direction:column;
     text-align:center;
-}
-
-@keyframes fade{
-
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0px);
-    }
-
 }
 
 /* ========================= */
@@ -183,7 +166,7 @@ body{
 }
 
 /* ========================= */
-/* GRID PRODUCTOS */
+/* GRID */
 /* ========================= */
 
 .grid{
@@ -217,7 +200,6 @@ body{
 }
 
 .info h3{
-    margin-bottom:10px;
     color:#8a5d6b;
     font-size:18px;
 }
@@ -247,30 +229,6 @@ body{
     width:100%;
     height:100%;
     object-fit:cover;
-    transition:0.3s;
-}
-
-.imagen-principal img:hover{
-    transform:scale(1.05);
-}
-
-.miniaturas{
-    display:flex;
-    gap:15px;
-    margin-top:20px;
-}
-
-.miniaturas img{
-    width:90px;
-    height:90px;
-    border-radius:15px;
-    object-fit:cover;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.miniaturas img:hover{
-    transform:scale(1.08);
 }
 
 .producto-info{
@@ -283,16 +241,10 @@ body{
     margin-bottom:20px;
 }
 
-.precio{
-    font-size:35px;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-
 .descripcion{
     line-height:32px;
     font-size:18px;
-    margin-bottom:30px;
+    margin-bottom:25px;
 }
 
 .subtitulo{
@@ -302,23 +254,67 @@ body{
     margin-bottom:15px;
 }
 
+/* ========================= */
+/* TALLES */
+/* ========================= */
+
+.talles{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.talle{
+    padding:12px 18px;
+    background:white;
+    border:2px solid #d6b9c3;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.talle:hover{
+    background:#8a5d6b;
+    color:white;
+}
+
+.talle.activo{
+    background:#8a5d6b;
+    color:white;
+}
+
+/* ========================= */
+/* COLORES */
+/* ========================= */
+
 .colores{
     display:flex;
-    gap:15px;
+    flex-wrap:wrap;
+    gap:12px;
 }
 
 .color{
-    width:40px;
-    height:40px;
+    width:42px;
+    height:42px;
     border-radius:50%;
-    border:2px solid #ccc;
+    border:2px solid #ddd;
     cursor:pointer;
     transition:0.3s;
 }
 
 .color:hover{
+    transform:scale(1.12);
+}
+
+.color.activo{
+    border:4px solid #8a5d6b;
     transform:scale(1.15);
 }
+
+/* ========================= */
+/* BOTONES */
+/* ========================= */
 
 .btn{
     display:inline-block;
@@ -336,6 +332,23 @@ body{
     transform:scale(1.05);
 }
 
+.btn-volver{
+    display:inline-block;
+    margin-bottom:25px;
+    background:#ead5cf;
+    color:#8a5d6b;
+    padding:12px 22px;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.btn-volver:hover{
+    background:#8a5d6b;
+    color:white;
+}
+
 /* ========================= */
 /* CONTACTO */
 /* ========================= */
@@ -344,7 +357,6 @@ body{
     width:100%;
     display:flex;
     justify-content:center;
-    padding:40px 20px 70px;
 }
 
 .contacto-box{
@@ -352,7 +364,7 @@ body{
     max-width:650px;
     background:white;
     border-radius:35px;
-    padding:40px 30px;
+    padding:40px;
     box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
 
@@ -365,7 +377,6 @@ body{
 .contacto-item{
     font-size:28px;
     margin-bottom:28px;
-    line-height:1.5;
 }
 
 .contacto-item a{
@@ -406,10 +417,6 @@ body{
         gap:12px;
     }
 
-    .producto img{
-        height:170px;
-    }
-
     .producto-container{
         flex-direction:column;
     }
@@ -431,32 +438,12 @@ body{
         font-size:38px;
     }
 
-    .contacto-container{
-        padding:10px 5px 40px;
-    }
-
-    .contacto-box{
-        border-radius:28px;
-        padding:28px 20px;
-    }
-
-    .contacto-box h2{
-        font-size:34px;
-        margin-bottom:22px;
-    }
-
-    .contacto-item{
-        font-size:20px;
-        margin-bottom:22px;
-    }
-
 }
 
 </style>
 </head>
 
 <body>
-    <img src="img/logo.png" alt="Logo">
 
 <!-- MENU MOBILE -->
 
@@ -491,11 +478,19 @@ Mantas
 </div>
 
 <div onclick="mostrarPagina('peluches')">
-Peluches
+Peluches con manta
 </div>
 
 <div onclick="mostrarPagina('acolchados')">
 Acolchados
+</div>
+
+<div onclick="mostrarPagina('cobertores')">
+Cobertores
+</div>
+
+<div onclick="mostrarPagina('toallas')">
+Toallas
 </div>
 
 </div>
@@ -569,24 +564,216 @@ Contacto
 
 <script>
 
+/* ========================= */
+/* CONFIG */
+/* ========================= */
+
 const categorias = [
 "sabanas",
 "mantas",
 "peluches",
-"acolchados"
+"acolchados",
+"cobertores",
+"toallas"
 ];
+
+const nombresSabanas = {
+1:"Juego de Sábanas",
+2:"Sábana Torero",
+3:"Sábana 2 en 1 Torero & Casa Premium",
+4:"Sábana Diseño Americano",
+5:"Sábana Fusion"
+};
+
+const tallesSabanas = {
+
+1:[
+{nombre:"1½",precio:"25.000"}
+],
+
+2:[
+{nombre:"Twin",precio:"32.000"},
+{nombre:"Queen",precio:"34.000"},
+{nombre:"King",precio:"36.000"}
+],
+
+3:[
+{nombre:"Twin",precio:"28.000"},
+{nombre:"Full",precio:"30.000"},
+{nombre:"Queen",precio:"32.000"}
+],
+
+4:[
+{nombre:"Twin",precio:"24.000"},
+{nombre:"Full",precio:"26.000"},
+{nombre:"Queen",precio:"28.000"}
+],
+
+5:[
+{nombre:"Twin",precio:"22.000"},
+{nombre:"Full",precio:"24.000"},
+{nombre:"Queen",precio:"26.000"}
+]
+
+};
+
+const coloresSabanas = {
+
+1:[
+"#4a6fdc",
+"#f5a9c5",
+["#4a6fdc","#f5a9c5"]
+],
+
+2:[
+"#c8a2ff",
+"#f7b6c2",
+"#808080",
+"#ffd1dc",
+"#001f5c",
+"#002b7f",
+"#ff1493",
+"#f5e6cc",
+"#0d1b4d",
+"#000000",
+"#d3d3d3",
+"#c08081",
+"#7b1e3a",
+"#ffb6c1",
+"#8b7d7b",
+"#dcdcdc",
+"#005eff",
+"#e8d9b5",
+"#3a3a3a",
+"#d40000",
+"#ff8c69",
+
+["#c8a2ff","#f7b6c2"],
+["#808080","#ffd1dc"],
+["#001f5c","#002b7f"],
+["#ff1493","#f5e6cc"],
+["#0d1b4d","#000000"],
+["#d3d3d3","#c08081"],
+["#7b1e3a","#ffb6c1"],
+["#8b7d7b","#dcdcdc"],
+["#005eff","#e8d9b5"],
+["#3a3a3a","#d40000"]
+
+],
+
+3:[
+"#005eff",
+["#005eff","#005eff"]
+],
+
+4:[
+"#fff8e7",
+"#d9d9d9",
+"#e9c7b9",
+"#cc0000",
+"#6b1f2b",
+
+["#fff8e7","#d9d9d9"],
+["#e9c7b9","#cc0000"],
+["#6b1f2b","#6b1f2b"]
+
+],
+
+5:[
+
+"#808080",
+"#ffb6c1",
+"#001f5c",
+"#005eff",
+"#2e8b57",
+"#4f7942",
+"#d4af37",
+"#ffffff",
+"#8b5a2b",
+"#ff1493",
+"#ffc0cb",
+"#00ffff",
+"#f5deb3",
+"#3a3a3a",
+"#4b2e2e",
+"#d8bfd8",
+"#9370db",
+"#228b22",
+"#000000",
+"#d7263d",
+"#87ceeb",
+"#7a5c58",
+"#556b2f",
+"#6b8e23",
+"#1b2a49",
+"#d3d3d3",
+
+["#808080","#ffb6c1"],
+["#001f5c","#005eff"],
+["#2e8b57","#4f7942"],
+["#808080","#d4af37"],
+["#ffffff","#8b5a2b"],
+["#ffffff","#808080"],
+["#005eff","#808080"],
+["#ff1493","#ffc0cb"],
+["#00ffff","#808080"],
+["#8b5a2b","#f5deb3"],
+["#3a3a3a","#808080"],
+["#ffc0cb","#ffffff"],
+["#4b2e2e","#ffffff"],
+["#d8bfd8","#9370db"],
+["#005eff","#8b5a2b"],
+["#228b22","#ffffff"],
+["#ffb6c1","#ff1493"],
+["#000000","#808080"],
+["#8b5a2b","#f5deb3"],
+["#8b5a2b","#f0e6c8"],
+["#005eff","#f5deb3"],
+["#d7263d","#ffffff"],
+["#005eff","#87ceeb"],
+["#7a5c58","#808080"],
+["#001f5c","#ffffff"],
+["#556b2f","#6b8e23"],
+["#1b2a49","#d3d3d3"]
+
+]
+
+};
+
+/* ========================= */
+/* CANTIDAD */
+/* ========================= */
+
+function cantidadProductos(categoria){
+
+if(categoria==="sabanas") return 5;
+if(categoria==="mantas") return 4;
+if(categoria==="peluches") return 31;
+if(categoria==="acolchados") return 0;
+if(categoria==="cobertores") return 2;
+if(categoria==="toallas") return 2;
+
+return 0;
+
+}
+
+/* ========================= */
+/* GENERAR PAGINAS */
+/* ========================= */
 
 document.querySelector(".contenido").innerHTML += categorias.map(categoria => `
 
 <section class="pagina" id="${categoria}">
 
 <h2 class="titulo">
-${categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+${categoria==="peluches"
+? "Peluches con manta"
+: categoria.charAt(0).toUpperCase() + categoria.slice(1)}
 </h2>
 
 <div class="grid">
 
-${Array.from({length:10}, (_,i)=>`
+${Array.from({length:cantidadProductos(categoria)}, (_,i)=>`
 
 <div class="producto"
 onclick="mostrarPagina('${categoria}${i+1}')">
@@ -596,12 +783,10 @@ onclick="mostrarPagina('${categoria}${i+1}')">
 <div class="info">
 
 <h3>
-Modelo ${i+1}
+${categoria==="sabanas"
+? nombresSabanas[i+1]
+: categoria + " Modelo " + (i+1)}
 </h3>
-
-<p>
-$${(35000 + i*2500).toLocaleString()}
-</p>
 
 </div>
 
@@ -613,9 +798,14 @@ $${(35000 + i*2500).toLocaleString()}
 
 </section>
 
-${Array.from({length:10}, (_,i)=>`
+${Array.from({length:cantidadProductos(categoria)}, (_,i)=>`
 
 <section class="pagina" id="${categoria}${i+1}">
+
+<div class="btn-volver"
+onclick="mostrarPagina('${categoria}')">
+← Volver
+</div>
 
 <div class="producto-container">
 
@@ -623,21 +813,7 @@ ${Array.from({length:10}, (_,i)=>`
 
 <div class="imagen-principal">
 
-<img id="img${categoria}${i+1}"
-src="https://via.placeholder.com/700x800/e7d9d2">
-
-</div>
-
-<div class="miniaturas">
-
-<img src="https://via.placeholder.com/700x800/d9c2b0"
-onclick="cambiarImagen('img${categoria}${i+1}','https://via.placeholder.com/700x800/d9c2b0')">
-
-<img src="https://via.placeholder.com/700x800/cfcfcf"
-onclick="cambiarImagen('img${categoria}${i+1}','https://via.placeholder.com/700x800/cfcfcf')">
-
-<img src="https://via.placeholder.com/700x800/f0d8d8"
-onclick="cambiarImagen('img${categoria}${i+1}','https://via.placeholder.com/700x800/f0d8d8')">
+<img src="https://via.placeholder.com/700x800/e7d9d2">
 
 </div>
 
@@ -646,17 +822,48 @@ onclick="cambiarImagen('img${categoria}${i+1}','https://via.placeholder.com/700x
 <div class="producto-info">
 
 <h1>
-${categoria} Modelo ${i+1}
+${categoria==="sabanas"
+? nombresSabanas[i+1]
+: categoria + " Modelo " + (i+1)}
 </h1>
-
-<div class="precio">
-$${(35000 + i*2500).toLocaleString()}
-</div>
 
 <div class="descripcion">
 Producto premium de Aderet.
 Diseño elegante, moderno y minimalista.
 Ideal para darle confort y estilo a tu hogar.
+</div>
+
+${categoria==="sabanas" ? `
+
+<div class="subtitulo">
+Talles
+</div>
+
+<div class="talles">
+
+${tallesSabanas[i+1].map(talle => `
+
+<div class="talle"
+onclick="
+seleccionarTalle(this);
+
+const boton =
+this.closest('.producto-info')
+.querySelector('.btn');
+
+boton.href =
+'https://wa.me/5491158203956?text=' +
+encodeURIComponent(
+'Hola, queria consultar sobre la ${nombresSabanas[i+1]} talle ${talle.nombre} de $${talle.precio}'
+);
+">
+
+${talle.nombre} · $${talle.precio}
+
+</div>
+
+`).join("")}
+
 </div>
 
 <div class="subtitulo">
@@ -665,37 +872,55 @@ Colores
 
 <div class="colores">
 
-<div class="color"
-style="background:#d9c2b0"
-onclick="cambiarImagen('img${categoria}${i+1}','https://via.placeholder.com/700x800/d9c2b0')">
-</div>
+${coloresSabanas[i+1].map(color => {
+
+if(Array.isArray(color)){
+
+return `
 
 <div class="color"
-style="background:#cfcfcf"
-onclick="cambiarImagen('img${categoria}${i+1}','https://via.placeholder.com/700x800/cfcfcf')">
+onclick="seleccionarColor(this)"
+style="
+background:linear-gradient(
+90deg,
+${color[0]} 50%,
+${color[1]} 50%
+);
+">
 </div>
+
+`;
+
+}else{
+
+return `
 
 <div class="color"
-style="background:#f0d8d8"
-onclick="cambiarImagen('img${categoria}${i+1}','https://via.placeholder.com/700x800/f0d8d8')">
+onclick="seleccionarColor(this)"
+style="background:${color}">
 </div>
+
+`;
+
+}
+
+}).join("")}
 
 </div>
 
-<div class="subtitulo">
-Métodos de pago
-</div>
-
-<p>
-• Efectivo<br>
-• Transferencia
-</p>
+` : ""}
 
 <a class="btn"
-href="https://wa.me/5491158203956?text=Hola,%20quiero%20reservar%20${categoria}%20Modelo%20${i+1}"
+href="https://wa.me/5491158203956?text=${encodeURIComponent(
+`Hola, queria consultar sobre la ${
+categoria==="sabanas"
+? nombresSabanas[i+1]
+: categoria + " Modelo " + (i+1)
+}`
+)}"
 target="_blank">
 
-Reservar
+Consultar
 
 </a>
 
@@ -708,6 +933,10 @@ Reservar
 `).join("")}
 
 `).join("");
+
+/* ========================= */
+/* FUNCIONES */
+/* ========================= */
 
 function mostrarPagina(id){
 
@@ -759,16 +988,42 @@ submenu.style.display="block";
 
 }
 
-function cambiarImagen(id,imagen){
-
-document.getElementById(id).src = imagen;
-
-}
-
 function toggleMenu(){
 
 document.querySelector(".sidebar")
 .classList.toggle("activo");
+
+}
+
+function seleccionarColor(elemento){
+
+const contenedor =
+elemento.parentElement;
+
+contenedor.querySelectorAll(".color")
+.forEach(color => {
+
+color.classList.remove("activo");
+
+});
+
+elemento.classList.add("activo");
+
+}
+
+function seleccionarTalle(elemento){
+
+const contenedor =
+elemento.parentElement;
+
+contenedor.querySelectorAll(".talle")
+.forEach(talle => {
+
+talle.classList.remove("activo");
+
+});
+
+elemento.classList.add("activo");
 
 }
 
