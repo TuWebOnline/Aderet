@@ -777,7 +777,7 @@ ${Array.from({length:cantidadProductos(categoria)}, (_,i)=>`
 <div class="producto"
 onclick="mostrarPagina('${categoria}${i+1}')">
 
-<img src="https://via.placeholder.com/400x500/e7d9d2">
+<img src="${categoria}_modelo${i+1}.png">
 
 <div class="info">
 
@@ -812,7 +812,7 @@ onclick="mostrarPagina('${categoria}')">
 
 <div class="imagen-principal">
 
-<img src="https://via.placeholder.com/700x800/e7d9d2">
+<img id="img-principal-${categoria}${i+1}" src="${categoria}_modelo${i+1}.png">
 
 </div>
 
@@ -871,14 +871,14 @@ Colores
 
 <div class="colores">
 
-${coloresSabanas[i+1].map(color => {
+${coloresSabanas[i+1].map((color, indiceColor) => {
 
 if(Array.isArray(color)){
 
 return `
 
 <div class="color"
-onclick="seleccionarColor(this)"
+onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${indiceColor+1}.png')"
 style="
 background:linear-gradient(
 90deg,
@@ -895,7 +895,7 @@ ${color[1]} 50%
 return `
 
 <div class="color"
-onclick="seleccionarColor(this)"
+onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${indiceColor+1}.png')"
 style="background:${color}">
 </div>
 
@@ -1024,6 +1024,13 @@ talle.classList.remove("activo");
 
 elemento.classList.add("activo");
 
+}
+
+function cambiarImagenColor(idPagina, nuevaRuta) {
+const img = document.getElementById("img-principal-" + idPagina);
+if(img) {
+img.src = nuevaRuta;
+}
 }
 
 </script>
