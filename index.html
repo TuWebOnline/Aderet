@@ -871,14 +871,14 @@ Colores
 
 <div class="colores">
 
-${coloresSabanas[i+1].map((color, indiceColor) => {
+${coloresSabanas[i+1].map((color, idx) => {
 
 if(Array.isArray(color)){
 
 return `
 
 <div class="color"
-onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${indiceColor+1}.png')"
+onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${idx+1}.png')"
 style="
 background:linear-gradient(
 90deg,
@@ -895,7 +895,7 @@ ${color[1]} 50%
 return `
 
 <div class="color"
-onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${indiceColor+1}.png')"
+onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${idx+1}.png')"
 style="background:${color}">
 </div>
 
