@@ -706,7 +706,6 @@ function inicializarProducto(categoria, modeloNum) {
         botonesTalles.forEach(t => t.classList.remove("activo"));
     }
 
-    // Forzamos que cargue las miniaturas del primer color disponible
     actualizarMiniaturasContenedor(idProducto, 1);
     mostrarPagina(idProducto);
     actualizarBotonWhatsApp(idProducto);
@@ -720,10 +719,10 @@ function actualizarMiniaturasContenedor(idProducto, numColor) {
 
         contenedorMiniaturas.innerHTML = `
             <div class="miniatura activa" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen1}')">
-                <img src="${rutaImagen1}">
+                <img src="${rutaImagen1}" onerror="this.src='${idProducto}_1.jpeg'">
             </div>
             <div class="miniatura" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen2}')">
-                <img src="${rutaImagen2}">
+                <img src="${rutaImagen2}" onerror="this.src='${idProducto}_2.jpeg'">
             </div>
         `;
     }
@@ -783,7 +782,14 @@ function seleccionarTalle(elemento, idProducto, nombreProducto, talleNombre, tal
 
 function cambiarImagenColor(idPagina, nuevaRuta) {
     const img = document.getElementById("img-principal-" + idPagina);
-    if(img) img.src = nuevaRuta;
+    if(img) {
+        img.src = nuevaRuta;
+        // Si no encuentra la imagen con guion, intenta cargar el nombre plano
+        img.onerror = function() {
+            if(nuevaRuta.includes('-1')) this.src = idPagina + '_1.jpeg';
+            if(nuevaRuta.includes('-2')) this.src = idPagina + '_2.jpeg';
+        };
+    }
 }
 
 function actualizarBotonWhatsApp(idProducto) {
