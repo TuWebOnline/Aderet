@@ -673,14 +673,46 @@ document.getElementById("contenedorPrincipal").insertAdjacentHTML('beforeend', h
 function inicializarProducto(categoria, modeloNum) {
     const idProducto = `${categoria}${modeloNum}`;
     const nombreProd = categoria==="sabanas" ? nombresSabanas[modeloNum] : categoria + " Modelo " + modeloNum;
+    const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
     
+    // Si NO es sábana, la foto principal por defecto al iniciar será la variante "_1.jpeg"
+    const fotoPorDefecto = categoria === "sabanas" ? `${categoria}_modelo${modeloNum}.jpeg` : `${idProducto}_1.jpeg`;
+
     seleccionActual[idProducto] = {
         nombre: nombreProd,
         talle: "",
         precio: "",
-        fotoLink: `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}/${categoria}_modelo${modeloNum}.jpeg`
+        fotoLink: `${urlBase}/${fotoPorDefecto}`
     };
     
+    // Cambiar la imagen principal por defecto si no es sábana
+    const imgPrincipal = document.getElementById(`img-principal-${idProducto}`);
+    if(imgPrincipal) {
+        imgPrincipal.src = fotoPorDefecto;
+    }
+
+    // INTERFAZ DE DOS IMÁGENES: Carga automática para productos que no son sábanas
+    if (categoria !== "sabanas") {
+        const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
+        if (contenedorMiniaturas) {
+            const rutaImagen1 = `${idProducto}_1.jpeg`;
+            const rutaImagen2 = `${idProducto}_2.jpeg`;
+
+            contenedorMiniaturas.innerHTML = `
+                <div class="miniatura activa" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen1}')">
+                    <img src="${rutaImagen1}">
+                </div>
+                <div class="miniatura" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen2}')">
+                    <img src="${rutaImagen2}">
+                </div>
+            `;
+        }
+    } else {
+        // Limpiar miniaturas si se entra a una sábana que aún no tiene color seleccionado
+        const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
+        if (contenedorMiniaturas) contenedorMiniaturas.innerHTML = "";
+    }
+
     mostrarPagina(idProducto);
     actualizarBotonWhatsApp(idProducto);
 }
@@ -708,7 +740,7 @@ function toggleMenu() { document.querySelector(".sidebar").classList.toggle("act
 function seleccionarColor(elemento, idProducto, numColor){
     const contenedor = elemento.parentElement;
     contenedor.querySelectorAll(".color").forEach(c => c.classList.remove("activo"));
-    element.classList.add("activo");
+    elemento.classList.add("activo");
 
     const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
     const rutaImagen2 = `${idProducto}_${numColor}-2.jpeg`;
@@ -736,7 +768,14 @@ function clickMiniatura(elemento, idProducto, rutaImagen) {
     const contenedor = elemento.parentElement;
     contenedor.querySelectorAll(".miniatura").forEach(m => m.classList.remove("activa"));
     elemento.classList.add("activa");
+    
     cambiarImagenColor(idProducto, rutaImagen);
+
+    // Actualiza el link de la foto enviada por WhatsApp según la miniatura cliqueada
+    const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
+    seleccionActual[idProducto].fotoLink = `${urlBase}/${rutaImagen}`;
+    
+    actualizarBotonWhatsApp(idProducto);
 }
 
 function seleccionarTalle(elemento, idProducto, nombreProducto, talleNombre, tallePrecio){
