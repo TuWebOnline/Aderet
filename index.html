@@ -591,6 +591,7 @@ function cantidadProductos(categoria){
 let htmlGenerado = "";
 
 categories.forEach(categoria => {
+    // Si es sábana usa la imagen del modelo completo, sino usa directamente el sufijo _1.jpeg
     htmlGenerado += `
     <section class="pagina" id="${categoria}">
         <h2 class="titulo">
@@ -599,7 +600,7 @@ categories.forEach(categoria => {
         <div class="grid">
             ${Array.from({length:cantidadProductos(categoria)}, (_,i)=>`
                 <div class="producto" onclick="inicializarProducto('${categoria}', ${i+1})">
-                    <img src="${categoria}_modelo${i+1}.jpeg">
+                    <img src="${categoria === 'sabanas' ? `${categoria}_modelo${i+1}.jpeg` : `${categoria}${i+1}_1.jpeg`}">
                     <div class="info">
                         <h3>${categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1)}</h3>
                     </div>
@@ -611,6 +612,7 @@ categories.forEach(categoria => {
 
     for(let i=0; i<cantidadProductos(categoria); i++){
         const nombreProductoActual = categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1);
+        const fotoInicialExpositor = categoria === 'sabanas' ? `${categoria}_modelo${i+1}.jpeg` : `${categoria}${i+1}_1.jpeg`;
         
         let htmlColores = "";
         if(categoria==="sabanas" && coloresSabanas[i+1]){
@@ -632,7 +634,7 @@ categories.forEach(categoria => {
             <div class="producto-container">
                 <div class="galeria">
                     <div class="imagen-principal">
-                        <img id="img-principal-${categoria}${i+1}" src="${categoria}_modelo${i+1}.jpeg">
+                        <img id="img-principal-${categoria}${i+1}" src="${fotoInicialExpositor}">
                     </div>
                     <div class="miniaturas-container" id="miniaturas-${categoria}${i+1}"></div>
                 </div>
@@ -675,7 +677,6 @@ function inicializarProducto(categoria, modeloNum) {
     const nombreProd = categoria==="sabanas" ? nombresSabanas[modeloNum] : categoria + " Modelo " + modeloNum;
     const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
     
-    // Si NO es sábana, la foto principal por defecto al iniciar será la variante "_1.jpeg"
     const fotoPorDefecto = categoria === "sabanas" ? `${categoria}_modelo${modeloNum}.jpeg` : `${idProducto}_1.jpeg`;
 
     seleccionActual[idProducto] = {
@@ -685,13 +686,12 @@ function inicializarProducto(categoria, modeloNum) {
         fotoLink: `${urlBase}/${fotoPorDefecto}`
     };
     
-    // Cambiar la imagen principal por defecto si no es sábana
     const imgPrincipal = document.getElementById(`img-principal-${idProducto}`);
     if(imgPrincipal) {
         imgPrincipal.src = fotoPorDefecto;
     }
 
-    // INTERFAZ DE DOS IMÁGENES: Carga automática para productos que no son sábanas
+    // INTERFAZ AUTOMÁTICA DE MINIATURAS (Para categorías normales sin colores dinámicos)
     if (categoria !== "sabanas") {
         const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
         if (contenedorMiniaturas) {
@@ -708,7 +708,6 @@ function inicializarProducto(categoria, modeloNum) {
             `;
         }
     } else {
-        // Limpiar miniaturas si se entra a una sábana que aún no tiene color seleccionado
         const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
         if (contenedorMiniaturas) contenedorMiniaturas.innerHTML = "";
     }
@@ -771,7 +770,6 @@ function clickMiniatura(elemento, idProducto, rutaImagen) {
     
     cambiarImagenColor(idProducto, rutaImagen);
 
-    // Actualiza el link de la foto enviada por WhatsApp según la miniatura cliqueada
     const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
     seleccionActual[idProducto].fotoLink = `${urlBase}/${rutaImagen}`;
     
