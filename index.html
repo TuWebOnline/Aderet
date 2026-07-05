@@ -706,6 +706,7 @@ function inicializarProducto(categoria, modeloNum) {
         botonesTalles.forEach(t => t.classList.remove("activo"));
     }
 
+    // Forzamos que cargue las miniaturas del primer color disponible
     actualizarMiniaturasContenedor(idProducto, 1);
     mostrarPagina(idProducto);
     actualizarBotonWhatsApp(idProducto);
@@ -789,14 +790,12 @@ function actualizarBotonWhatsApp(idProducto) {
     const datos = seleccionActual[idProducto];
     if(!datos) return;
 
-    // Detectamos la foto exacta que se está mostrando en la pantalla principal
     const imgElement = document.getElementById(`img-principal-${idProducto}`);
     let nombreFotoCompleta = "No especificado";
     if(imgElement && imgElement.src) {
         nombreFotoCompleta = imgElement.src.substring(imgElement.src.lastIndexOf('/') + 1);
     }
 
-    // Armamos el texto súper detallado con las variables exactas
     let texto = `¡Hola! Quiero más información sobre el producto:\n\n`;
     texto += `*Producto:* ${datos.nombre}\n`;
     
