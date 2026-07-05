@@ -472,7 +472,7 @@ body{
 /* ========================= */
 /* CONFIG */
 /* ========================= */
-const categorias = ["sabanas", "mantas", "peluches", "acolchados", "cobertores", "toallas"];
+const categories = ["sabanas", "mantas", "peluches", "acolchados", "cobertores", "toallas"];
 
 const nombresSabanas = {
     1:"Juego de Sábanas",
@@ -491,11 +491,51 @@ const tallesSabanas = {
 };
 
 const coloresSabanas = {
-    1:["#4a6fdc","#f5a9c5"],
-    2:["#c8a2ff","#f7b6c2","#808080","#ffd1dc","#001f5c","#002b7f","#ff1493","#f5e6cc","#0d1b4d","#000000","#d3d3d3","#c08081","#7b1e3a","#ffb6c1","#8b7d7b","#dcdcdc","#005eff","#e8d9b5","#3a3a3a","#d40000","#ff8c69",["#c8a2ff","#f7b6c2"],["#808080","#ffd1dc"],["#001f5c","#002b7f"],["#ff1493","#f5e6cc"],["#0d1b4d","#000000"],["#d3d3d3","#c08081"],["#7b1e3a","#ffb6c1"],["#8b7d7b","#dcdcdc"],["#005eff","#e8d9b5"],["#3a3a3a","#d40000"]],
-    3:["#005eff",["#005eff","#005eff"]],
-    4:["#fff8e7","#d9d9d9","#e9c7b9","#cc0000","#6b1f2b",["#fff8e7","#d9d9d9"],["#e9c7b9","#cc0000"],["#6b1f2b","#6b1f2b"]],
-    5:["#808080","#ffb6c1","#001f5c","#005eff","#2e8b57","#4f7942","#d4af37","#ffffff","#8b5a2b","#ff1493","#ffc0cb","#00ffff","#f5deb3","#3a3a3a","#4b2e2e","#d8bfd8","#9370db","#228b22","#000000","#d7263d","#87ceeb","#7a5c58","#556b2f","#6b8e23","#1b2a49","#d3d3d3",["#808080","#ffb6c1"],["#001f5c","#005eff"],["#2e8b57","#4f7942"],["#808080","#d4af37"],["#ffffff","#8b5a2b"],["#ffffff","#808080"],["#005eff","#808080"],["#ff1493","#ffc0cb"],["#00ffff","#808080"],["#8b5a2b","#f5deb3"],["#3a3a3a","#808080"],["#ffc0cb","#ffffff"],["#4b2e2e","#ffffff"],["#d8bfd8","#9370db"],["#005eff","#8b5a2b"],["#228b22","#ffffff"],["#ffb6c1","#ff1493"],["#000000","#808080"],["#8b5a2b","#f5deb3"],["#8b5a2b","#f0e6c8"],["#005eff","#f5deb3"],["#d7263d","#ffffff"],["#005eff","#87ceeb"],["#7a5c58","#808080"],["#001f5c","#ffffff"],["#556b2f","#6b8e23"],["#1b2a49","#d3d3d3"]]
+    1: [
+        "#4a6fdc",
+        "#f5a9c5"
+    ],
+    2: [
+        "#c8a2ff", "#f7b6c2", "#808080", "#ffd1dc", "#001f5c", "#002b7f", "#ff1493", "#f5e6cc", "#0d1b4d", "#000000", "#d3d3d3", "#c08081", "#7b1e3a", "#ffb6c1", "#8b7d7b", "#dcdcdc", "#005eff", "#e8d9b5", "#3a3a3a", "#d40000", "#ff8c69"
+    ],
+    3: [
+        "#005eff"
+    ],
+    4: [
+        "#fff8e7", "#d9d9d9", "#e9c7b9", "#cc0000", "#9b4444"
+    ],
+    5: [
+        ["#808080", "#ffb6c1"], // 1. Gris con rosa
+        "#001f5c",               // 2. Azul marino
+        "#005eff",               // 3. Azul fuerte
+        "#2e8b57",               // 4. Verde planta marina alga
+        ["#808080", "#d4af37"], // 5. Gris con dorado
+        ["#ffffff", "#8b5a2b"], // 6. Blanco con marrón
+        ["#ffffff", "#808080"], // 7. Blanco con gris
+        ["#005eff", "#808080"], // 8. Azul con gris
+        ["#ff1493", "#ffc0cb"], // 9. Rosa fuerte con rosa claro
+        ["#00ffff", "#808080"], // 10. Cyan con gris
+        ["#8b5a2b", "#f5deb3"], // 11. Marrón con beige
+        ["#808080", "#000000"], // 12. Gris con negro
+        ["#ffb6c1", "#ffffff"], // 13. Rosa con blanco
+        ["#4a2c11", "#ffffff"], // 14. Marrón oscuro con blanco
+        ["#00ffff", "#808080"], // 15. Cyan con gris
+        ["#ffc0cb", "#7b1e3a"], // 16. Rosa claro con violeta
+        ["#005eff", "#8b5a2b"], // 17. Azul con marrón
+        ["#228b22", "#ffffff"], // 18. Verde con blanco
+        ["#005eff", "#808080"], // 19. Azul con gris
+        ["#ffb6c1", "#ff1493"], // 20. Rosa suave con rosa fuerte
+        ["#000000", "#808080"], // 21. Negro con gris
+        ["#8b5a2b", "#f5deb3"], // 22. Marrón con beige
+        ["#8b5a2b", "#fff8e7"], // 23. Marrón con amarillo claro como hueso
+        ["#005eff", "#f5deb3"], // 24. Azul con beige
+        ["#ff69b4", "#ffffff"], // 25. Rojo flor rosa con blanco
+        ["#005eff", "#87ceeb"], // 26. Azul con celeste
+        ["#6e5d55", "#808080"], // 27. Marrón apagado con gris
+        ["#001f5c", "#ffffff"], // 28. Azul marino con blanco
+        ["#228b22", "#556b2f"], // 29. Verde con verde seco
+        ["#0b1d3a", "#d3d3d3"]  // 30. Azul profundo con gris claro
+    ]
 };
 
 function cantidadProductos(categoria){
@@ -513,7 +553,7 @@ function cantidadProductos(categoria){
 /* ========================= */
 let htmlGenerado = "";
 
-categorias.forEach(categoria => {
+categories.forEach(categoria => {
     // Generar Grilla de Categoría
     htmlGenerado += `
     <section class="pagina" id="${categoria}">
@@ -537,6 +577,17 @@ categorias.forEach(categoria => {
     for(let i=0; i<cantidadProductos(categoria); i++){
         const nombreProductoActual = categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1);
         
+        let htmlColores = "";
+        if(categoria==="sabanas" && coloresSabanas[i+1]){
+            coloresSabanas[i+1].forEach((color, idx) => {
+                if(Array.isArray(color)){
+                    htmlColores += `<div class="color" onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${idx+1}.png')" style="background:linear-gradient(90deg, ${color[0]} 50%, ${color[1]} 50%);"></div>`;
+                }else{
+                    htmlColores += `<div class="color" onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${idx+1}.png')" style="background:${color}"></div>`;
+                }
+            });
+        }
+
         htmlGenerado += `
         <section class="pagina" id="${categoria}${i+1}">
             <div style="width:100%; overflow:hidden; margin-bottom:20px;">
@@ -564,13 +615,7 @@ categorias.forEach(categoria => {
                         </div>
                         <div class="subtitulo">Colores</div>
                         <div class="colores">
-                            ${coloresSabanas[i+1].map((color, idx) => {
-                                if(Array.isArray(color)){
-                                    return `<div class="color" onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${idx+1}.png')" style="background:linear-gradient(90deg, ${color[0]} 50%, ${color[1]} 50%);"></div>`;
-                                }else{
-                                    return `<div class="color" onclick="seleccionarColor(this); cambiarImagenColor('${categoria}${i+1}', '${categoria}_modelo${i+1}_${idx+1}.png')" style="background:${color}"></div>`;
-                                }
-                            }).join("")}
+                            ${htmlColores}
                         </div>
                     ` : ""}
                     <a class="btn btn-consultar-wa" href="https://wa.me/5491158203956?text=${encodeURIComponent('Hola, quería consultar sobre: ' + nombreProductoActual)}" target="_blank">
@@ -583,7 +628,7 @@ categorias.forEach(categoria => {
     }
 });
 
-// Insertar de forma segura en el DOM sin pisar los elementos estáticos (evita romper clicks del menú)
+// Insertar en el DOM
 document.getElementById("contenedorPrincipal").insertAdjacentHTML('beforeend', htmlGenerado);
 
 /* ========================= */
@@ -606,7 +651,6 @@ function mostrarPagina(id){
         }
     }
     
-    // Auto-cerrar sidebar en celular tras elegir sección
     if(window.innerWidth <= 900){
         document.querySelector(".sidebar").classList.remove("activo");
     }
@@ -620,6 +664,10 @@ function toggleProductos(){
         submenu.style.display = "block";
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    mostrarPagina('inicio');
+});
 
 function toggleMenu(){
     document.querySelector(".sidebar").classList.toggle("activo");
@@ -640,7 +688,6 @@ function seleccionarTalle(elemento, nombreProducto, talleNombre, tallePrecio){
     });
     elemento.classList.add("activo");
 
-    // Enlazar de forma dinámica el talle seleccionado al botón de WhatsApp
     const botonWa = elemento.closest('.producto-info').querySelector('.btn-consultar-wa');
     if(botonWa){
         botonWa.href = 'https://wa.me/5491158203956?text=' + encodeURIComponent('Hola, quería consultar sobre la ' + nombreProducto + ' talle ' + talleNombre + ' de $' + tallePrecio);
