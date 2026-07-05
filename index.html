@@ -522,7 +522,7 @@ const tallesSabanas = {
     2:[{nombre:"Twin",precio:"32.000"},{nombre:"Queen",precio:"34.000"},{nombre:"King",precio:"36.000"}],
     3:[{nombre:"Twin",precio:"28.000"},{nombre:"Full",precio:"30.000"},{nombre:"Queen",precio:"32.000"}],
     4:[{nombre:"Twin",precio:"24.000"},{nombre:"Full",precio:"26.000"},{nombre:"Queen",precio:"28.000"}],
-    5:[{nombre:"Twin",precio:"22.000"},{nombre:"Full",precio:"24.000"},{nombre:"Queen",genesis: "26.000"}]
+    5:[{nombre:"Twin",precio:"22.000"},{nombre:"Full",precio:"24.000"},{nombre:"Queen",precio:"26.000"}]
 };
 
 const coloresSabanas = {
@@ -591,7 +591,7 @@ function cantidadProductos(categoria){
 let htmlGenerado = "";
 
 categories.forEach(categoria => {
-    // Portada en grilla principal: Siempre busca estrictamente color 1, foto 1 (_1-1.jpeg)
+    // Portada en grilla principal: Siempre busca estrictamente color 1, foto 1 (.jpeg)
     htmlGenerado += `
     <section class="pagina" id="${categoria}">
         <h2 class="titulo">
@@ -678,7 +678,6 @@ function inicializarProducto(categoria, modeloNum) {
     const nombreProd = categoria==="sabanas" ? nombresSabanas[modeloNum] : categoria + " Modelo " + modeloNum;
     const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
     
-    // Al abrir el producto por primera vez, carga por defecto el Color 1 (_1-1.jpeg)
     const fotoPorDefecto = `${idProducto}_1-1.jpeg`;
 
     seleccionActual[idProducto] = {
@@ -693,7 +692,6 @@ function inicializarProducto(categoria, modeloNum) {
         imgPrincipal.src = fotoPorDefecto;
     }
 
-    // Reiniciar la selección visual de los círculos de colores (marcar el primero como activo)
     const seccionProducto = document.getElementById(idProducto);
     if(seccionProducto) {
         const circulosColores = seccionProducto.querySelectorAll(".color");
@@ -706,7 +704,6 @@ function inicializarProducto(categoria, modeloNum) {
         botonesTalles.forEach(t => t.classList.remove("activo"));
     }
 
-    // Cargar miniaturas del Color 1 inmediatamente
     actualizarMiniaturasContenedor(idProducto, 1);
 
     mostrarPagina(idProducto);
@@ -757,13 +754,11 @@ function seleccionarColor(elemento, idProducto, numColor){
 
     const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
 
-    // Cambiar imagen grande
     cambiarImagenColor(idProducto, rutaImagen1);
 
     const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
     seleccionActual[idProducto].fotoLink = `${urlBase}/${rutaImagen1}`;
 
-    // Actualizar dinámicamente las dos miniaturas de abajo correspondientes al color elegido
     actualizarMiniaturasContenedor(idProducto, numColor);
     actualizarBotonWhatsApp(idProducto);
 }
@@ -771,7 +766,6 @@ function seleccionarColor(elemento, idProducto, numColor){
 function clickMiniatura(elemento, idProducto, rutaImagen) {
     const contenedor = elemento.parentElement;
     contenedor.querySelectorAll(".miniatura").forEach(m => m.classList.remove("activa"));
-    elemento.className = "miniatura activa";
     elemento.classList.add("activa");
     
     cambiarImagenColor(idProducto, rutaImagen);
@@ -784,7 +778,7 @@ function clickMiniatura(elemento, idProducto, rutaImagen) {
 
 function seleccionarTalle(elemento, idProducto, nombreProducto, talleNombre, tallePrecio){
     const contenedor = elemento.parentElement;
-    contenedor.querySelectorAll(".talle").forEach(t => t.classList.remove("activo"));
+    contenedor.querySelectorAll(".talle").forEach(t => c => c.classList.remove("activo"));
     elemento.classList.add("activo");
 
     seleccionActual[idProducto].talle = talleNombre;
