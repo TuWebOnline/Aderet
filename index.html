@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aderet</title>
 
-<!-- IMPORTANTE: Cambiá TU_USUARIO y TU_REPOSITORIO por tus datos reales para que WhatsApp cargue la tarjeta -->
+<!-- Etiquetas para WhatsApp -->
 <meta property="og:title" content="Aderet | Blanquería Premium">
 <meta property="og:description" content="Diseños delicados y calidad premium para tu hogar.">
 <meta property="og:image" content="https://TU_USUARIO.github.io/TU_REPOSITORIO/logo.png">
@@ -683,7 +683,6 @@ function inicializarProducto(categoria, modeloNum) {
     const idProducto = `${categoria}${modeloNum}`;
     const nombreProd = categoria==="sabanas" ? nombresSabanas[modeloNum] : categoria + " Modelo " + modeloNum;
     
-    // Eliminamos el link completo de la imagen en el mensaje para que WhatsApp use la tarjeta Open Graph
     seleccionActual[idProducto] = {
         nombre: nombreProd,
         talle: "",
@@ -715,7 +714,6 @@ function inicializarProducto(categoria, modeloNum) {
 function actualizarMiniaturasContenedor(idProducto, numColor) {
     const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
     if (contenedorMiniaturas) {
-        // Enlace estricto adaptado a la foto 3fba546d-b127-4cbb-a05f-8c01d2ad0537
         const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
         const rutaImagen2 = `${idProducto}_${numColor}-2.jpeg`;
 
@@ -791,13 +789,26 @@ function actualizarBotonWhatsApp(idProducto) {
     const datos = seleccionActual[idProducto];
     if(!datos) return;
 
-    // Mensaje limpio: El link de la web va abajo para que WhatsApp genere automáticamente la tarjeta como querías
-    let texto = `¡Hola! Quiero más información sobre el producto:\n\n`;
-    texto += `*${datos.nombre}*\n`;
-    if(datos.talle) {
-        texto += `Talle: *${datos.talle}* ($${datos.precio})\n`;
+    // Detectamos la foto exacta que se está mostrando en la pantalla principal
+    const imgElement = document.getElementById(`img-principal-${idProducto}`);
+    let nombreFotoCompleta = "No especificado";
+    if(imgElement && imgElement.src) {
+        nombreFotoCompleta = imgElement.src.substring(imgElement.src.lastIndexOf('/') + 1);
     }
-    texto += `\nVer en la tienda: ${window.location.href}`;
+
+    // Armamos el texto súper detallado con las variables exactas
+    let texto = `¡Hola! Quiero más información sobre el producto:\n\n`;
+    texto += `*Producto:* ${datos.nombre}\n`;
+    
+    if(datos.talle) {
+        texto += `*Talle:* ${datos.talle}\n`;
+        texto += `*Precio:* $${datos.precio}\n`;
+    } else {
+        texto += `*Precio:* Consultar talle\n`;
+    }
+    
+    texto += `*Color seleccionado:* Archivo ${nombreFotoCompleta}\n\n`;
+    texto += `Ver en la tienda: ${window.location.href}`;
 
     const botonWa = document.getElementById(`btn-wa-${idProducto}`);
     if(botonWa) {
