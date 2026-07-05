@@ -591,7 +591,7 @@ function cantidadProductos(categoria){
 let htmlGenerado = "";
 
 categories.forEach(categoria => {
-    // Si es sábana usa la imagen del modelo completo, sino usa directamente el sufijo _1.jpeg
+    // Portada en grilla principal: Siempre busca la sub-variante "_1-1.jpeg"
     htmlGenerado += `
     <section class="pagina" id="${categoria}">
         <h2 class="titulo">
@@ -600,7 +600,7 @@ categories.forEach(categoria => {
         <div class="grid">
             ${Array.from({length:cantidadProductos(categoria)}, (_,i)=>`
                 <div class="producto" onclick="inicializarProducto('${categoria}', ${i+1})">
-                    <img src="${categoria === 'sabanas' ? `${categoria}_modelo${i+1}.jpeg` : `${categoria}${i+1}_1.jpeg`}">
+                    <img src="${categoria}${i+1}_1-1.jpeg">
                     <div class="info">
                         <h3>${categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1)}</h3>
                     </div>
@@ -612,7 +612,7 @@ categories.forEach(categoria => {
 
     for(let i=0; i<cantidadProductos(categoria); i++){
         const nombreProductoActual = categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1);
-        const fotoInicialExpositor = categoria === 'sabanas' ? `${categoria}_modelo${i+1}.jpeg` : `${categoria}${i+1}_1.jpeg`;
+        const fotoInicialExpositor = `${categoria}${i+1}_1-1.jpeg`;
         
         let htmlColores = "";
         if(categoria==="sabanas" && coloresSabanas[i+1]){
@@ -677,7 +677,8 @@ function inicializarProducto(categoria, modeloNum) {
     const nombreProd = categoria==="sabanas" ? nombresSabanas[modeloNum] : categoria + " Modelo " + modeloNum;
     const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
     
-    const fotoPorDefecto = categoria === "sabanas" ? `${categoria}_modelo${modeloNum}.jpeg` : `${idProducto}_1.jpeg`;
+    // Todos los productos inician por defecto con la sub-variante "_1-1.jpeg"
+    const fotoPorDefecto = `${idProducto}_1-1.jpeg`;
 
     seleccionActual[idProducto] = {
         nombre: nombreProd,
@@ -691,25 +692,20 @@ function inicializarProducto(categoria, modeloNum) {
         imgPrincipal.src = fotoPorDefecto;
     }
 
-    // INTERFAZ AUTOMÁTICA DE MINIATURAS (Para categorías normales sin colores dinámicos)
-    if (categoria !== "sabanas") {
-        const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
-        if (contenedorMiniaturas) {
-            const rutaImagen1 = `${idProducto}_1.jpeg`;
-            const rutaImagen2 = `${idProducto}_2.jpeg`;
+    // INTERFAZ DE DOS IMÁGENES: Carga automática inmediata para todos los productos utilizando "_1-1.jpeg" y "_1-2.jpeg"
+    const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
+    if (contenedorMiniaturas) {
+        const rutaImagen1 = `${idProducto}_1-1.jpeg`;
+        const rutaImagen2 = `${idProducto}_1-2.jpeg`;
 
-            contenedorMiniaturas.innerHTML = `
-                <div class="miniatura activa" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen1}')">
-                    <img src="${rutaImagen1}">
-                </div>
-                <div class="miniatura" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen2}')">
-                    <img src="${rutaImagen2}">
-                </div>
-            `;
-        }
-    } else {
-        const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
-        if (contenedorMiniaturas) contenedorMiniaturas.innerHTML = "";
+        contenedorMiniaturas.innerHTML = `
+            <div class="miniatura activa" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen1}')">
+                <img src="${rutaImagen1}">
+            </div>
+            <div class="miniatura" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen2}')">
+                <img src="${rutaImagen2}">
+            </div>
+        `;
     }
 
     mostrarPagina(idProducto);
