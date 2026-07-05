@@ -573,7 +573,6 @@ const coloresSabanas = {
     ]
 };
 
-// Guarda las selecciones activas para armar el mensaje final de WhatsApp
 let seleccionActual = {};
 
 function cantidadProductos(categoria){
@@ -600,7 +599,7 @@ categories.forEach(categoria => {
         <div class="grid">
             ${Array.from({length:cantidadProductos(categoria)}, (_,i)=>`
                 <div class="producto" onclick="inicializarProducto('${categoria}', ${i+1})">
-                    <img src="${categoria}_modelo${i+1}.png">
+                    <img src="${categoria}_modelo${i+1}.jpeg">
                     <div class="info">
                         <h3>${categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1)}</h3>
                     </div>
@@ -633,7 +632,7 @@ categories.forEach(categoria => {
             <div class="producto-container">
                 <div class="galeria">
                     <div class="imagen-principal">
-                        <img id="img-principal-${categoria}${i+1}" src="${categoria}_modelo${i+1}.png">
+                        <img id="img-principal-${categoria}${i+1}" src="${categoria}_modelo${i+1}.jpeg">
                     </div>
                     <div class="miniaturas-container" id="miniaturas-${categoria}${i+1}"></div>
                 </div>
@@ -675,12 +674,11 @@ function inicializarProducto(categoria, modeloNum) {
     const idProducto = `${categoria}${modeloNum}`;
     const nombreProd = categoria==="sabanas" ? nombresSabanas[modeloNum] : categoria + " Modelo " + modeloNum;
     
-    // Resetear selecciones para este producto
     seleccionActual[idProducto] = {
         nombre: nombreProd,
         talle: "",
         precio: "",
-        fotoLink: `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}/${categoria}_modelo${modeloNum}.png`
+        fotoLink: `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}/${categoria}_modelo${modeloNum}.jpeg`
     };
     
     mostrarPagina(idProducto);
@@ -710,14 +708,13 @@ function toggleMenu() { document.querySelector(".sidebar").classList.toggle("act
 function seleccionarColor(elemento, idProducto, numColor){
     const contenedor = elemento.parentElement;
     contenedor.querySelectorAll(".color").forEach(c => c.classList.remove("activo"));
-    elemento.classList.add("activo");
+    element.classList.add("activo");
 
-    const rutaImagen1 = `${idProducto}_${numColor}-1.png`;
-    const rutaImagen2 = `${idProducto}_${numColor}-2.png`;
+    const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
+    const rutaImagen2 = `${idProducto}_${numColor}-2.jpeg`;
 
     cambiarImagenColor(idProducto, rutaImagen1);
 
-    // Guardar el link absoluto de la foto 1-1 en la selección
     const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
     seleccionActual[idProducto].fotoLink = `${urlBase}/${rutaImagen1}`;
 
@@ -758,7 +755,6 @@ function cambiarImagenColor(idPagina, nuevaRuta) {
     if(img) img.src = nuevaRuta;
 }
 
-// NUEVA FUNCIÓN: Genera el texto con el link de la foto directo para que WhatsApp arme la vista previa
 function actualizarBotonWhatsApp(idProducto) {
     const datos = seleccionActual[idProducto];
     if(!datos) return;
