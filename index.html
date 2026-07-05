@@ -229,7 +229,6 @@ body{
     object-fit:cover;
 }
 
-/* MINIATURAS NUEVAS */
 .miniaturas-container{
     display: flex;
     gap: 15px;
@@ -574,6 +573,9 @@ const coloresSabanas = {
     ]
 };
 
+// Guarda las selecciones activas para armar el mensaje final de WhatsApp
+let seleccionActual = {};
+
 function cantidadProductos(categoria){
     if(categoria==="sabanas") return 5;
     if(categoria==="mantas") return 4;
@@ -590,7 +592,6 @@ function cantidadProductos(categoria){
 let htmlGenerado = "";
 
 categories.forEach(categoria => {
-    // Generar Grilla de Categoría
     htmlGenerado += `
     <section class="pagina" id="${categoria}">
         <h2 class="titulo">
@@ -598,7 +599,7 @@ categories.forEach(categoria => {
         </h2>
         <div class="grid">
             ${Array.from({length:cantidadProductos(categoria)}, (_,i)=>`
-                <div class="producto" onclick="mostrarPagina('${categoria}${i+1}')">
+                <div class="producto" onclick="inicializarProducto('${categoria}', ${i+1})">
                     <img src="${categoria}_modelo${i+1}.png">
                     <div class="info">
                         <h3>${categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1)}</h3>
@@ -609,7 +610,6 @@ categories.forEach(categoria => {
     </section>
     `;
 
-    // Generar Vista de Detalle de cada Producto
     for(let i=0; i<cantidadProductos(categoria); i++){
         const nombreProductoActual = categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1);
         
@@ -635,10 +635,7 @@ categories.forEach(categoria => {
                     <div class="imagen-principal">
                         <img id="img-principal-${categoria}${i+1}" src="${categoria}_modelo${i+1}.png">
                     </div>
-                    <!-- CONTENEDOR NUEVO DE MINIATURAS INTERNAS DEBAJO DE LA FOTO GRANDE -->
-                    <div class="miniaturas-container" id="miniaturas-${categoria}${i+1}">
-                        <!-- Se llenan automáticamente cuando se elige un color -->
-                    </div>
+                    <div class="miniaturas-container" id="miniaturas-${categoria}${i+1}"></div>
                 </div>
                 <div class="producto-info">
                     <h1>${nombreProductoActual}</h1>
@@ -649,7 +646,7 @@ categories.forEach(categoria => {
                         <div class="subtitulo">Talles</div>
                         <div class="talles">
                             ${tallesSabanas[i+1].map(talle => `
-                                <div class="talle" onclick="seleccionarTalle(this, '${nombresSabanas[i+1]}', '${talle.nombre}', '${talle.precio}')">
+                                <div class="talle" onclick="seleccionarTalle(this, '${categoria}${i+1}', '${nombresSabanas[i+1]}', '${talle.nombre}', '${talle.precio}')">
                                     ${talle.nombre} · $${talle.precio}
                                 </div>
                             `).join("")}
@@ -659,7 +656,7 @@ categories.forEach(categoria => {
                             ${htmlColores}
                         </div>
                     ` : ""}
-                    <a class="btn btn-consultar-wa" href="https://wa.me/5491158203956?text=${encodeURIComponent('Hola, quería consultar sobre: ' + nombreProductoActual)}" target="_blank">
+                    <a id="btn-wa-${categoria}${i+1}" class="btn" href="#" target="_blank">
                         Consultar
                     </a>
                 </div>
@@ -672,63 +669,58 @@ categories.forEach(categoria => {
 document.getElementById("contenedorPrincipal").insertAdjacentHTML('beforeend', htmlGenerado);
 
 /* ========================= */
-/* FUNCIONES DE NAVEGACIÓN Y CONTROL */
+/* CONTROLADORES */
 /* ========================= */
+function inicializarProducto(categoria, modeloNum) {
+    const idProducto = `${categoria}${modeloNum}`;
+    const nombreProd = categoria==="sabanas" ? nombresSabanas[modeloNum] : categoria + " Modelo " + modeloNum;
+    
+    // Resetear selecciones para este producto
+    seleccionActual[idProducto] = {
+        nombre: nombreProd,
+        talle: "",
+        precio: "",
+        fotoLink: `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}/${categoria}_modelo${modeloNum}.png`
+    };
+    
+    mostrarPagina(idProducto);
+    actualizarBotonWhatsApp(idProducto);
+}
+
 function mostrarPagina(id){
     const paginas = document.querySelectorAll(".pagina");
-    paginas.forEach(function(pagina){
-        pagina.style.display = "none";
-        pagina.classList.remove("activa");
-    });
+    paginas.forEach(p => { p.style.display = "none"; p.classList.remove("activa"); });
 
     const paginaActiva = document.getElementById(id);
     if(paginaActiva){
-        if(id === "inicio"){
-            paginaActiva.style.display = "flex";
-            paginaActiva.classList.add("activa");
-        } else {
-            paginaActiva.style.display = "block";
-        }
+        if(id === "inicio") { paginaActiva.style.display = "flex"; paginaActiva.classList.add("activa"); }
+        else { paginaActiva.style.display = "block"; }
     }
-    
-    if(window.innerWidth <= 900){
-        document.querySelector(".sidebar").classList.remove("activo");
-    }
+    if(window.innerWidth <= 900) document.querySelector(".sidebar").classList.remove("activo");
 }
 
 function toggleProductos(){
     const submenu = document.getElementById("submenuProductos");
-    if(submenu.style.display === "block"){
-        submenu.style.display = "none";
-    } else {
-        submenu.style.display = "block";
-    }
+    submenu.style.display = submenu.style.display === "block" ? "none" : "block";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    mostrarPagina('inicio');
-});
+document.addEventListener("DOMContentLoaded", () => mostrarPagina('inicio'));
+function toggleMenu() { document.querySelector(".sidebar").classList.toggle("activo"); }
 
-function toggleMenu(){
-    document.querySelector(".sidebar").classList.toggle("activo");
-}
-
-// MODIFICADA: Ahora maneja las miniaturas dinámicas por color guion número de imagen (1 y 2)
 function seleccionarColor(elemento, idProducto, numColor){
     const contenedor = elemento.parentElement;
-    contenedor.querySelectorAll(".color").forEach(color => {
-        color.classList.remove("activo");
-    });
+    contenedor.querySelectorAll(".color").forEach(c => c.classList.remove("activo"));
     elemento.classList.add("activo");
 
-    // Armar rutas basadas en la estructura exacta requerida: producto_modeloX_color-imagen.png
     const rutaImagen1 = `${idProducto}_${numColor}-1.png`;
     const rutaImagen2 = `${idProducto}_${numColor}-2.png`;
 
-    // Cambiar de inmediato la vista principal a la primera foto del color
     cambiarImagenColor(idProducto, rutaImagen1);
 
-    // Renderizar los dos cuadraditos de miniaturas abajo
+    // Guardar el link absoluto de la foto 1-1 en la selección
+    const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
+    seleccionActual[idProducto].fotoLink = `${urlBase}/${rutaImagen1}`;
+
     const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
     if (contenedorMiniaturas) {
         contenedorMiniaturas.innerHTML = `
@@ -740,6 +732,7 @@ function seleccionarColor(elemento, idProducto, numColor){
             </div>
         `;
     }
+    actualizarBotonWhatsApp(idProducto);
 }
 
 function clickMiniatura(elemento, idProducto, rutaImagen) {
@@ -749,23 +742,36 @@ function clickMiniatura(elemento, idProducto, rutaImagen) {
     cambiarImagenColor(idProducto, rutaImagen);
 }
 
-function seleccionarTalle(elemento, nombreProducto, talleNombre, tallePrecio){
+function seleccionarTalle(elemento, idProducto, nombreProducto, talleNombre, tallePrecio){
     const contenedor = elemento.parentElement;
-    contenedor.querySelectorAll(".talle").forEach(talle => {
-        talle.classList.remove("activo");
-    });
+    contenedor.querySelectorAll(".talle").forEach(t => t.classList.remove("activo"));
     elemento.classList.add("activo");
 
-    const botonWa = elemento.closest('.producto-info').querySelector('.btn-consultar-wa');
-    if(botonWa){
-        botonWa.href = 'https://wa.me/5491158203956?text=' + encodeURIComponent('Hola, quería consultar sobre la ' + nombreProducto + ' talle ' + talleNombre + ' de $' + tallePrecio);
-    }
+    seleccionActual[idProducto].talle = talleNombre;
+    seleccionActual[idProducto].precio = tallePrecio;
+
+    actualizarBotonWhatsApp(idProducto);
 }
 
 function cambiarImagenColor(idPagina, nuevaRuta) {
     const img = document.getElementById("img-principal-" + idPagina);
-    if(img) {
-        img.src = nuevaRuta;
+    if(img) img.src = nuevaRuta;
+}
+
+// NUEVA FUNCIÓN: Genera el texto con el link de la foto directo para que WhatsApp arme la vista previa
+function actualizarBotonWhatsApp(idProducto) {
+    const datos = seleccionActual[idProducto];
+    if(!datos) return;
+
+    let texto = `Hola, quería consultar sobre: *${datos.nombre}*\n`;
+    if(datos.talle) {
+        texto += `Talle: *${datos.talle}* ($${datos.precio})\n`;
+    }
+    texto += `Foto del producto: ${datos.fotoLink}`;
+
+    const botonWa = document.getElementById(`btn-wa-${idProducto}`);
+    if(botonWa) {
+        botonWa.href = `https://wa.me/5491158203956?text=${encodeURIComponent(texto)}`;
     }
 }
 </script>
