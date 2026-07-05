@@ -4,808 +4,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aderet</title>
-
 <style>
-/* ========================= */
-/* RESET */
-/* ========================= */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:Arial,sans-serif;
-    background:#f7f1ed;
-    color:#5e4b52;
-    overflow-x:hidden;
-}
-
-/* ========================= */
-/* MENU MOBILE */
-/* ========================= */
-.menu-mobile{
-    position:fixed;
-    top:15px;
-    left:15px;
-    width:55px;
-    height:55px;
-    background:#8a5d6b;
-    color:white;
-    border-radius:15px;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    font-size:30px;
-    cursor:pointer;
-    z-index:9999;
-    box-shadow:0 5px 20px rgba(0,0,0,0.15);
-}
-
-/* ========================= */
-/* SIDEBAR */
-/* ========================= */
-.sidebar{
-    width:260px;
-    height:100vh;
-    background:#ead5cf;
-    position:fixed;
-    left:0;
-    top:0;
-    padding:110px 25px 40px;
-    overflow-y:auto;
-    box-shadow:5px 0px 20px rgba(0,0,0,0.05);
-    transition:0.4s;
-    z-index:999;
-}
-
-.logo-menu{
-    font-size:42px;
-    font-weight:bold;
-    color:#8a5d6b;
-    margin-bottom:50px;
-}
-
-.menu-item{
-    font-size:20px;
-    margin-bottom:22px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:0.3s;
-}
-
-.menu-item:hover{
-    color:#8a5d6b;
-    transform:translateX(5px);
-}
-
-.submenu{
-    margin-left:15px;
-    margin-top:10px;
-    display:none;
-}
-
-.submenu div{
-    margin-bottom:12px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.submenu div:hover{
-    color:#8a5d6b;
-    transform:translateX(5px);
-}
-
-/* ========================= */
-/* CONTENIDO */
-/* ========================= */
-.contenido{
-    margin-left:260px;
-    width:calc(100% - 260px);
-}
-
-.pagina{
-    min-height:100vh;
-    padding:60px;
-    display:none;
-}
-
-.activa{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-}
-
-/* ========================= */
-/* INICIO */
-/* ========================= */
-.logo{
-    width:260px;
-    height:260px;
-    border-radius:30px;
-    background:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin-bottom:40px;
-    box-shadow:0px 5px 20px rgba(0,0,0,0.08);
-    font-size:25px;
-    color:#999;
-    overflow:hidden;
-}
-
-.logo img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-#inicio h2{
-    font-size:65px;
-    color:#8a5d6b;
-    margin-bottom:20px;
-}
-
-#inicio p{
-    font-size:22px;
-    max-width:700px;
-    line-height:35px;
-}
-
-/* ========================= */
-/* TITULOS */
-/* ========================= */
-.titulo{
-    font-size:50px;
-    color:#8a5d6b;
-    margin-bottom:40px;
-}
-
-/* ========================= */
-/* GRID */
-/* ========================= */
-.grid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:22px;
-}
-
-.producto{
-    background:white;
-    border-radius:22px;
-    overflow:hidden;
-    cursor:pointer;
-    transition:0.3s;
-    box-shadow:0px 5px 15px rgba(0,0,0,0.08);
-}
-
-.producto:hover{
-    transform:translateY(-8px) scale(1.02);
-}
-
-.producto img{
-    width:100%;
-    height:240px;
-    object-fit:cover;
-    display:block;
-}
-
-.info{
-    padding:18px;
-}
-
-.info h3{
-    color:#8a5d6b;
-    font-size:18px;
-}
-
-/* ========================= */
-/* PRODUCTO EXPOSITOR */
-/* ========================= */
-.producto-container{
-    display:flex;
-    gap:50px;
-}
-
-.galeria{
-    width:50%;
-}
-
-.imagen-principal{
-    width:100%;
-    height:550px;
-    background:white;
-    border-radius:25px;
-    overflow:hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
-.imagen-principal img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.miniaturas-container{
-    display: flex;
-    gap: 15px;
-    margin-top: 15px;
-    justify-content: left;
-}
-
-.miniatura{
-    width: 80px;
-    height: 80px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: white;
-    border: 2px solid #ead5cf;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.miniatura:hover{
-    border-color: #8a5d6b;
-    transform: scale(1.05);
-}
-
-.miniatura.activa{
-    border-color: #8a5d6b;
-    box-shadow: 0 0 8px rgba(138, 93, 107, 0.4);
-}
-
-.miniatura img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.producto-info{
-    width:50%;
-}
-
-.producto-info h1{
-    font-size:45px;
-    color:#8a5d6b;
-    margin-bottom:20px;
-    text-align: left;
-}
-
-.descripcion{
-    line-height:32px;
-    font-size:18px;
-    margin-bottom:25px;
-    text-align: left;
-}
-
-.subtitulo{
-    font-size:24px;
-    color:#8a5d6b;
-    margin-top:30px;
-    margin-bottom:15px;
-    text-align: left;
-}
-
-/* ========================= */
-/* TALLES */
-/* ========================= */
-.talles{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-}
-
-.talle{
-    padding:12px 18px;
-    background:white;
-    border:2px solid #d6b9c3;
-    border-radius:14px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:0.3s;
-}
-
-.talle:hover{
-    background:#8a5d6b;
-    color:white;
-}
-
-.talle.activo{
-    background:#8a5d6b;
-    color:white;
-}
-
-/* ========================= */
-/* COLORES */
-/* ========================= */
-.colores{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-}
-
-.color{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:2px solid #ddd;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.color:hover{
-    transform:scale(1.12);
-}
-
-.color.activo{
-    border:4px solid #8a5d6b;
-    transform:scale(1.15);
-}
-
-/* ========================= */
-/* BOTONES */
-/* ========================= */
-.btn{
-    display:inline-block;
-    margin-top:35px;
-    background:#8a5d6b;
-    color:white;
-    padding:18px 40px;
-    border-radius:15px;
-    text-decoration:none;
-    font-weight:bold;
-    transition:0.3s;
-}
-
-.btn:hover{
-    transform:scale(1.05);
-}
-
-.btn-volver{
-    display:inline-block;
-    margin-bottom:25px;
-    background:#ead5cf;
-    color:#8a5d6b;
-    padding:12px 22px;
-    border-radius:14px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:0.3s;
-    float: left;
-}
-
-/* ========================= */
-/* CONTACTO */
-/* ========================= */
-.contacto-container{
-    width:100%;
-    display:flex;
-    justify-content:center;
-}
-
-.contacto-box{
-    width:100%;
-    max-width:650px;
-    background:white;
-    border-radius:35px;
-    padding:40px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.08);
-}
-
-.contacto-box h2{
-    font-size:52px;
-    color:#9b6b7d;
-    margin-bottom:35px;
-}
-
-.contacto-item{
-    font-size:28px;
-    margin-bottom:28px;
-}
-
-.contacto-item a{
-    color:#9b6b7d;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
-@media(max-width:900px){
-    .menu-mobile{
-        display:flex;
-    }
-    .sidebar{
-        left:-260px;
-    }
-    .sidebar.activo{
-        left:0;
-    }
-    .contenido{
-        margin-left:0;
-        width:100%;
-    }
-    .pagina{
-        padding:90px 15px 30px;
-    }
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-    }
-    .producto-container{
-        flex-direction:column;
-        gap:30px;
-    }
-    .galeria,
-    .producto-info{
-        width:100%;
-    }
-    .imagen-principal{
-        height:420px;
-    }
-    #inicio h2{
-        font-size:42px;
-    }
-    .titulo{
-        font-size:38px;
-    }
-}
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    body{ font-family:Arial,sans-serif; background:#f7f1ed; color:#5e4b52; }
+    .sidebar{ width:260px; height:100vh; background:#ead5cf; position:fixed; left:0; top:0; padding:110px 25px; box-shadow:5px 0 20px rgba(0,0,0,0.05); }
+    .contenido{ margin-left:260px; padding:60px; }
+    .pagina{ display:none; }
+    .pagina.activa{ display:block; }
+    .grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:22px; }
+    .producto{ background:white; border-radius:22px; overflow:hidden; cursor:pointer; }
+    .producto img{ width:100%; height:240px; object-fit:cover; }
+    .producto-container{ display:flex; gap:50px; }
+    .galeria{ width:50%; }
+    .imagen-principal img{ width:100%; height:550px; object-fit:cover; border-radius:25px; }
+    .miniaturas-container{ display:flex; gap:15px; margin-top:15px; }
+    .miniatura{ width:80px; height:80px; border-radius:12px; border:2px solid #ead5cf; cursor:pointer; overflow:hidden; }
+    .miniatura img{ width:100%; height:100%; object-fit:cover; }
+    .btn{ display:inline-block; margin-top:35px; background:#8a5d6b; color:white; padding:18px 40px; border-radius:15px; text-decoration:none; font-weight:bold; }
 </style>
 </head>
 <body>
 
-<div class="menu-mobile" onclick="toggleMenu()">☰</div>
-
 <div class="sidebar">
-    <div class="logo-menu">Aderet</div>
+    <div style="font-size:42px; font-weight:bold; color:#8a5d6b; margin-bottom:50px;">Aderet</div>
     <div class="menu-item" onclick="mostrarPagina('inicio')">Inicio</div>
-    <div class="menu-item" onclick="toggleProductos()">Productos</div>
-    <div class="submenu" id="submenuProductos">
-        <div onclick="mostrarPagina('sabanas')">Sábanas</div>
-        <div onclick="mostrarPagina('mantas')">Mantas</div>
-        <div onclick="mostrarPagina('peluches')">Peluches con manta</div>
-        <div onclick="mostrarPagina('acolchados')">Acolchados</div>
-        <div onclick="mostrarPagina('cobertores')">Cobertores</div>
-        <div onclick="mostrarPagina('toallas')">Toallas</div>
-    </div>
-    <div class="menu-item" onclick="mostrarPagina('contacto')">Contacto</div>
+    <div class="menu-item" onclick="mostrarPagina('sabanas')">Sábanas</div>
 </div>
 
 <div class="contenido" id="contenedorPrincipal">
-
     <section class="pagina activa" id="inicio">
-        <div class="logo">
-            <img src="logo.png" alt="Logo Aderet">
-        </div>
-        <h2>Elegancia y confort</h2>
-        <p>Blanquería online moderna y minimalista. Diseños delicados y calidad premium.</p>
+        <h1>Bienvenida a Aderet</h1>
     </section>
 
-    <section class="pagina" id="contacto">
-        <div class="contacto-container">
-            <div class="contacto-box">
-                <h2>Contacto</h2>
-                <div class="contacto-item">
-                    📱 WhatsApp<br>
-                    <a href="https://wa.me/5491158203956" target="_blank">11 5820-3956</a>
-                </div>
-                <div class="contacto-item">
-                    📸 Instagram<br>
-                    <a href="https://instagram.com/aderet" target="_blank">@Aderet</a>
-                </div>
+    <section class="pagina" id="sabanas">
+        <h2 style="margin-bottom:40px;">Sábanas</h2>
+        <div class="grid">
+            <!-- Solo 5 productos como tenés en tus archivos -->
+            <div class="producto" onclick="cargarProducto('sabanas', 1)">
+                <img src="sabanas1_1-1.jpeg">
+                <h3>Juego de Sábanas</h3>
+            </div>
+            <div class="producto" onclick="cargarProducto('sabanas', 2)">
+                <img src="sabanas1_2-1.jpeg">
+                <h3>Sábana Torero</h3>
             </div>
         </div>
     </section>
 
+    <section class="pagina" id="detalle">
+        <div id="detalleContenido"></div>
+    </section>
 </div>
 
 <script>
-/* ========================= */
-/* CONFIG */
-/* ========================= */
-const categories = ["sabanas", "mantas", "peluches", "acolchados", "cobertores", "toallas"];
-
-const nombresSabanas = {
-    1:"Juego de Sábanas",
-    2:"Sábana Torero",
-    3:"Sábana 2 en 1 Torero & Casa Premium",
-    4:"Sábana Diseño Americano",
-    5:"Sábana Fusion"
-};
-
-const tallesSabanas = {
-    1:[{nombre:"1½",precio:"25.000"}],
-    2:[{nombre:"Twin",precio:"32.000"},{nombre:"Queen",precio:"34.000"},{nombre:"King",precio:"36.000"}],
-    3:[{nombre:"Twin",precio:"28.000"},{nombre:"Full",precio:"30.000"},{nombre:"Queen",precio:"32.000"}],
-    4:[{nombre:"Twin",precio:"24.000"},{nombre:"Full",precio:"26.000"},{nombre:"Queen",precio:"28.000"}],
-    5:[{nombre:"Twin",precio:"22.000"},{nombre:"Full",precio:"24.000"},{nombre:"Queen",precio:"26.000"}]
-};
-
-const coloresSabanas = {
-    1: [
-        "#4a6fdc",
-        "#f5a9c5"
-    ],
-    2: [
-        "#c8a2ff", "#f7b6c2", "#808080", "#ffd1dc", "#001f5c", "#002b7f", "#ff1493", "#f5e6cc", "#0d1b4d", "#000000", "#d3d3d3", "#c08081", "#7b1e3a", "#ffb6c1", "#8b7d7b", "#dcdcdc", "#005eff", "#e8d9b5", "#3a3a3a", "#d40000", "#ff8c69"
-    ],
-    3: [
-        "#005eff"
-    ],
-    4: [
-        "#fff8e7", "#d9d9d9", "#e9c7b9", "#cc0000", "#9b4444"
-    ],
-    5: [
-        ["#808080", "#ffb6c1"],
-        "#001f5c",
-        "#005eff",
-        "#2e8b57",
-        ["#808080", "#d4af37"],
-        ["#ffffff", "#8b5a2b"],
-        ["#ffffff", "#808080"],
-        ["#005eff", "#808080"],
-        ["#ff1493", "#ffc0cb"],
-        ["#00ffff", "#808080"],
-        ["#8b5a2b", "#f5deb3"],
-        ["#808080", "#000000"],
-        ["#ffb6c1", "#ffffff"],
-        ["#4a2c11", "#ffffff"],
-        ["#00ffff", "#808080"],
-        ["#ffc0cb", "#7b1e3a"],
-        ["#005eff", "#8b5a2b"],
-        ["#228b22", "#ffffff"],
-        ["#005eff", "#808080"],
-        ["#ffb6c1", "#ff1493"],
-        ["#000000", "#808080"],
-        ["#8b5a2b", "#f5deb3"],
-        ["#8b5a2b", "#fff8e7"],
-        ["#005eff", "#f5deb3"],
-        ["#ff69b4", "#ffffff"],
-        ["#005eff", "#87ceeb"],
-        ["#6e5d55", "#808080"],
-        ["#001f5c", "#ffffff"],
-        ["#228b22", "#556b2f"],
-        ["#0b1d3a", "#d3d3d3"]
-    ]
-};
-
-let seleccionActual = {};
-
-function cantidadProductos(categoria){
-    if(categoria==="sabanas") return 5;
-    if(categoria==="mantas") return 4;
-    if(categoria==="peluches") return 31;
-    if(categoria==="acolchados") return 0;
-    if(categoria==="cobertores") return 2;
-    if(categoria==="toallas") return 2;
-    return 0;
+function mostrarPagina(id) {
+    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
+    document.getElementById(id).classList.add('activa');
 }
 
-/* ========================= */
-/* GENERAR PAGINAS DINÁMICAS */
-/* ========================= */
-let htmlGenerado = "";
-
-categories.forEach(categoria => {
-    htmlGenerado += `
-    <section class="pagina" id="${categoria}">
-        <h2 class="titulo">
-            ${categoria==="peluches" ? "Peluches con manta" : categoria.charAt(0).toUpperCase() + categoria.slice(1)}
-        </h2>
-        <div class="grid">
-            ${Array.from({length:cantidadProductos(categoria)}, (_,i)=>`
-                <div class="producto" onclick="inicializarProducto('${categoria}', ${i+1})">
-                    <img src="${categoria}${i+1}_1-1.jpeg">
-                    <div class="info">
-                        <h3>${categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1)}</h3>
-                    </div>
+function cargarProducto(cat, num) {
+    mostrarPagina('detalle');
+    const container = document.getElementById('detalleContenido');
+    container.innerHTML = `
+        <button onclick="mostrarPagina('sabanas')">Volver</button>
+        <div class="producto-container">
+            <div class="galeria">
+                <div class="imagen-principal">
+                    <img id="imgPrincipal" src="${cat}${num}_1-1.jpeg">
                 </div>
-            `).join("")}
+                <div class="miniaturas-container">
+                    <div class="miniatura" onclick="document.getElementById('imgPrincipal').src='${cat}${num}_1-1.jpeg'"><img src="${cat}${num}_1-1.jpeg"></div>
+                    <div class="miniatura" onclick="document.getElementById('imgPrincipal').src='${cat}${num}_1-2.jpeg'"><img src="${cat}${num}_1-2.jpeg"></div>
+                </div>
+            </div>
+            <div class="producto-info">
+                <h1>Producto ${num}</h1>
+                <a class="btn" href="https://wa.me/5491158203956" target="_blank">Consultar</a>
+            </div>
         </div>
-    </section>
     `;
-
-    for(let i=0; i<cantidadProductos(categoria); i++){
-        const nombreProductoActual = categoria==="sabanas" ? nombresSabanas[i+1] : categoria + " Modelo " + (i+1);
-        const fotoInicialExpositor = `${categoria}${i+1}_1-1.jpeg`;
-        
-        let htmlColores = "";
-        if(categoria==="sabanas" && coloresSabanas[i+1]){
-            coloresSabanas[i+1].forEach((color, idx) => {
-                const numColor = idx + 1;
-                const claseActivo = numColor === 1 ? "activo" : "";
-                if(Array.isArray(color)){
-                    htmlColores += `<div class="color ${claseActivo}" onclick="seleccionarColor(this, '${categoria}${i+1}', ${numColor});" style="background:linear-gradient(90deg, ${color[0]} 50%, ${color[1]} 50%);"></div>`;
-                }else{
-                    htmlColores += `<div class="color ${claseActivo}" onclick="seleccionarColor(this, '${categoria}${i+1}', ${numColor});" style="background:${color}"></div>`;
-                }
-            });
-        }
-
-        htmlGenerado += `
-        <section class="pagina" id="${categoria}${i+1}">
-            <div style="width:100%; overflow:hidden; margin-bottom:20px;">
-                <div class="btn-volver" onclick="mostrarPagina('${categoria}')">← Volver</div>
-            </div>
-            <div class="producto-container">
-                <div class="galeria">
-                    <div class="imagen-principal">
-                        <img id="img-principal-${categoria}${i+1}" src="${fotoInicialExpositor}">
-                    </div>
-                    <div class="miniaturas-container" id="miniaturas-${categoria}${i+1}"></div>
-                </div>
-                <div class="producto-info">
-                    <h1>${nombreProductoActual}</h1>
-                    <div class="descripcion">
-                        Producto premium de Aderet. Diseño elegante, moderno y minimalista. Ideal para darle confort y estilo a tu hogar.
-                    </div>
-                    ${categoria==="sabanas" ? `
-                        <div class="subtitulo">Talles</div>
-                        <div class="talles">
-                            ${tallesSabanas[i+1].map(talle => `
-                                <div class="talle" onclick="seleccionarTalle(this, '${categoria}${i+1}', '${nombresSabanas[i+1]}', '${talle.nombre}', '${talle.precio}')">
-                                    ${talle.nombre} · $${talle.precio}
-                                </div>
-                            `).join("")}
-                        </div>
-                        <div class="subtitulo">Colores</div>
-                        <div class="colores">
-                            ${htmlColores}
-                        </div>
-                    ` : ""}
-                    <a id="btn-wa-${categoria}${i+1}" class="btn" href="#" target="_blank">
-                        Consultar
-                    </a>
-                </div>
-            </div>
-        </section>
-        `;
-    }
-});
-
-document.getElementById("contenedorPrincipal").insertAdjacentHTML('beforeend', htmlGenerado);
-
-/* ========================= */
-/* CONTROLADORES */
-/* ========================= */
-function inicializarProducto(categoria, modeloNum) {
-    const idProducto = `${categoria}${modeloNum}`;
-    const nombreProd = categoria==="sabanas" ? nombresSabanas[modeloNum] : categoria + " Modelo " + modeloNum;
-    const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
-    
-    const fotoPorDefecto = `${idProducto}_1-1.jpeg`;
-
-    seleccionActual[idProducto] = {
-        nombre: nombreProd,
-        talle: "",
-        precio: "",
-        fotoLink: `${urlBase}/${fotoPorDefecto}`
-    };
-    
-    const imgPrincipal = document.getElementById(`img-principal-${idProducto}`);
-    if(imgPrincipal) {
-        imgPrincipal.src = fotoPorDefecto;
-    }
-
-    const seccionProducto = document.getElementById(idProducto);
-    if(seccionProducto) {
-        const circulosColores = seccionProducto.querySelectorAll(".color");
-        circulosColores.forEach((c, idx) => {
-            if(idx === 0) c.classList.add("activo");
-            else c.classList.remove("activo");
-        });
-        
-        const botonesTalles = seccionProducto.querySelectorAll(".talle");
-        botonesTalles.forEach(t => t.classList.remove("activo"));
-    }
-
-    actualizarMiniaturasContenedor(idProducto, 1);
-    mostrarPagina(idProducto);
-    actualizarBotonWhatsApp(idProducto);
-}
-
-function actualizarMiniaturasContenedor(idProducto, numColor) {
-    const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
-    if (contenedorMiniaturas) {
-        // Forzamos estrictamente el formato limpio limpia-espacios
-        const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
-        const rutaImagen2 = `${idProducto}_${numColor}-2.jpeg`;
-
-        contenedorMiniaturas.innerHTML = `
-            <div class="miniatura activa" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen1}')">
-                <img src="${rutaImagen1}">
-            </div>
-            <div class="miniatura" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen2}')">
-                <img src="${rutaImagen2}">
-            </div>
-        `;
-    }
-}
-
-function mostrarPagina(id){
-    const paginas = document.querySelectorAll(".pagina");
-    paginas.forEach(p => { p.style.display = "none"; p.classList.remove("activa"); });
-
-    const paginaActiva = document.getElementById(id);
-    if(paginaActiva){
-        if(id === "inicio") { paginaActiva.style.display = "flex"; paginaActiva.classList.add("activa"); }
-        else { paginaActiva.style.display = "block"; }
-    }
-    if(window.innerWidth <= 900) document.querySelector(".sidebar").classList.remove("activo");
-}
-
-function toggleProductos(){
-    const submenu = document.getElementById("submenuProductos");
-    submenu.style.display = submenu.style.display === "block" ? "none" : "block";
-}
-
-document.addEventListener("DOMContentLoaded", () => mostrarPagina('inicio'));
-function toggleMenu() { document.querySelector(".sidebar").classList.toggle("activo"); }
-
-function seleccionarColor(elemento, idProducto, numColor){
-    const contenedor = elemento.parentElement;
-    contenedor.querySelectorAll(".color").forEach(c => c.classList.remove("activo"));
-    elemento.classList.add("activo");
-
-    const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
-    cambiarImagenColor(idProducto, rutaImagen1);
-
-    const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
-    seleccionActual[idProducto].fotoLink = `${urlBase}/${rutaImagen1}`;
-
-    actualizarMiniaturasContenedor(idProducto, numColor);
-    actualizarBotonWhatsApp(idProducto);
-}
-
-function clickMiniatura(elemento, idProducto, rutaImagen) {
-    const contenedor = elemento.parentElement;
-    contenedor.querySelectorAll(".miniatura").forEach(m => m.classList.remove("activa"));
-    elemento.classList.add("activa");
-    
-    cambiarImagenColor(idProducto, rutaImagen);
-
-    const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
-    seleccionActual[idProducto].fotoLink = `${urlBase}/${rutaImagen}`;
-    
-    actualizarBotonWhatsApp(idProducto);
-}
-
-function seleccionarTalle(elemento, idProducto, nombreProducto, talleNombre, tallePrecio){
-    const contenedor = elemento.parentElement;
-    contenedor.querySelectorAll(".talle").forEach(t => t.classList.remove("activo"));
-    elemento.classList.add("activo");
-
-    seleccionActual[idProducto].talle = talleNombre;
-    seleccionActual[idProducto].precio = tallePrecio;
-
-    actualizarBotonWhatsApp(idProducto);
-}
-
-function cambiarImagenColor(idPagina, nuevaRuta) {
-    const img = document.getElementById("img-principal-" + idPagina);
-    if(img) img.src = nuevaRuta;
-}
-
-function actualizarBotonWhatsApp(idProducto) {
-    const datos = seleccionActual[idProducto];
-    if(!datos) return;
-
-    let texto = `Hola, quería consultar sobre: *${datos.nombre}*\n`;
-    if(datos.talle) {
-        texto += `Talle: *${datos.talle}* ($${datos.precio})\n`;
-    }
-    texto += `Foto del producto: ${datos.fotoLink}`;
-
-    const botonWa = document.getElementById(`btn-wa-${idProducto}`);
-    if(botonWa) {
-        botonWa.href = `https://wa.me/5491158203956?text=${encodeURIComponent(texto)}`;
-    }
 }
 </script>
-
 </body>
 </html>
