@@ -1,45 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aderet</title>
-<style>
-    *{ margin:0; padding:0; box-sizing:border-box; }
-    body{ font-family:Arial,sans-serif; background:#f7f1ed; color:#5e4b52; }
-    .sidebar{ width:260px; height:100vh; background:#ead5cf; position:fixed; left:0; top:0; padding:110px 25px; box-shadow:5px 0 20px rgba(0,0,0,0.05); }
-    .contenido{ margin-left:260px; padding:60px; }
-    .pagina{ display:none; }
-    .pagina.activa{ display:block; }
-    .grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:22px; }
-    .producto{ background:white; border-radius:22px; overflow:hidden; cursor:pointer; }
-    .producto img{ width:100%; height:240px; object-fit:cover; }
-    .producto-container{ display:flex; gap:50px; }
-    .galeria{ width:50%; }
-    .imagen-principal img{ width:100%; height:550px; object-fit:cover; border-radius:25px; }
-    .miniaturas-container{ display:flex; gap:15px; margin-top:15px; }
-    .miniatura{ width:80px; height:80px; border-radius:12px; border:2px solid #ead5cf; cursor:pointer; overflow:hidden; }
-    .miniatura img{ width:100%; height:100%; object-fit:cover; }
-    .btn{ display:inline-block; margin-top:35px; background:#8a5d6b; color:white; padding:18px 40px; border-radius:15px; text-decoration:none; font-weight:bold; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aderet</title>
+    
+    <!-- Etiquetas para que WhatsApp muestre la tarjeta (Open Graph) -->
+    <meta property="og:title" content="Aderet | Blanquería Premium">
+    <meta property="og:description" content="Descubrí nuestros diseños delicados y calidad premium.">
+    <meta property="og:image" content="https://TU_USUARIO.github.io/TU_REPOSITORIO/logo.png">
+    <meta property="og:url" content="https://TU_USUARIO.github.io/TU_REPOSITORIO/">
+    <meta property="og:type" content="website">
+
+    <style>
+        *{ margin:0; padding:0; box-sizing:border-box; }
+        body{ font-family:Arial,sans-serif; background:#f7f1ed; color:#5e4b52; }
+        .sidebar{ width:260px; height:100vh; background:#ead5cf; position:fixed; left:0; top:0; padding:110px 25px; box-shadow:5px 0 20px rgba(0,0,0,0.05); }
+        .contenido{ margin-left:260px; padding:60px; }
+        .pagina{ display:none; }
+        .pagina.activa{ display:block; }
+        .grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:22px; }
+        .producto{ background:white; border-radius:22px; overflow:hidden; cursor:pointer; }
+        .producto img{ width:100%; height:240px; object-fit:cover; }
+        .producto-container{ display:flex; gap:50px; }
+        .galeria{ width:50%; }
+        .imagen-principal img{ width:100%; height:550px; object-fit:cover; border-radius:25px; }
+        .miniaturas-container{ display:flex; gap:15px; margin-top:15px; }
+        .miniatura{ width:80px; height:80px; border-radius:12px; border:2px solid #ead5cf; cursor:pointer; overflow:hidden; }
+        .miniatura img{ width:100%; height:100%; object-fit:cover; }
+        .btn{ display:inline-block; margin-top:35px; background:#8a5d6b; color:white; padding:18px 40px; border-radius:15px; text-decoration:none; font-weight:bold; }
+        button{ margin-bottom: 20px; padding: 10px 20px; cursor: pointer; border: none; background: #ead5cf; border-radius: 10px; color: #8a5d6b; font-weight: bold; }
+    </style>
 </head>
 <body>
 
 <div class="sidebar">
     <div style="font-size:42px; font-weight:bold; color:#8a5d6b; margin-bottom:50px;">Aderet</div>
-    <div class="menu-item" onclick="mostrarPagina('inicio')">Inicio</div>
-    <div class="menu-item" onclick="mostrarPagina('sabanas')">Sábanas</div>
+    <div class="menu-item" onclick="mostrarPagina('inicio')" style="cursor:pointer; margin-bottom:15px;">Inicio</div>
+    <div class="menu-item" onclick="mostrarPagina('sabanas')" style="cursor:pointer;">Sábanas</div>
 </div>
 
 <div class="contenido" id="contenedorPrincipal">
     <section class="pagina activa" id="inicio">
         <h1>Bienvenida a Aderet</h1>
+        <p>Calidad y diseño para tu hogar.</p>
     </section>
 
     <section class="pagina" id="sabanas">
         <h2 style="margin-bottom:40px;">Sábanas</h2>
         <div class="grid">
-            <!-- Solo 5 productos como tenés en tus archivos -->
             <div class="producto" onclick="cargarProducto('sabanas', 1)">
                 <img src="sabanas1_1-1.jpeg">
                 <h3>Juego de Sábanas</h3>
@@ -66,7 +75,7 @@ function cargarProducto(cat, num) {
     mostrarPagina('detalle');
     const container = document.getElementById('detalleContenido');
     container.innerHTML = `
-        <button onclick="mostrarPagina('sabanas')">Volver</button>
+        <button onclick="mostrarPagina('sabanas')">← Volver</button>
         <div class="producto-container">
             <div class="galeria">
                 <div class="imagen-principal">
@@ -79,7 +88,7 @@ function cargarProducto(cat, num) {
             </div>
             <div class="producto-info">
                 <h1>Producto ${num}</h1>
-                <a class="btn" href="https://wa.me/5491158203956" target="_blank">Consultar</a>
+                <a class="btn" href="https://wa.me/5491158203956" target="_blank">Consultar por WhatsApp</a>
             </div>
         </div>
     `;
