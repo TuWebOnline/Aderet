@@ -522,7 +522,7 @@ const tallesSabanas = {
     2:[{nombre:"Twin",precio:"32.000"},{nombre:"Queen",precio:"34.000"},{nombre:"King",precio:"36.000"}],
     3:[{nombre:"Twin",precio:"28.000"},{nombre:"Full",precio:"30.000"},{nombre:"Queen",precio:"32.000"}],
     4:[{nombre:"Twin",precio:"24.000"},{nombre:"Full",precio:"26.000"},{nombre:"Queen",precio:"28.000"}],
-    5:[{nombre:"Twin",precio:"22.000"},{nombre:"Full",precio:"24.000"},{nombre:"Queen",precio:"26.000"}]
+    5:[{nombre:"Twin",precio:"22.000"},{nombre:"Full",precio:"24.000"},{nombre:"Queen",genesis: "26.000"}]
 };
 
 const coloresSabanas = {
@@ -591,7 +591,7 @@ function cantidadProductos(categoria){
 let htmlGenerado = "";
 
 categories.forEach(categoria => {
-    // Portada en grilla principal: Siempre busca la sub-variante "_1-1.jpeg"
+    // Portada en grilla principal: Siempre busca estrictamente color 1, foto 1 (_1-1.jpeg)
     htmlGenerado += `
     <section class="pagina" id="${categoria}">
         <h2 class="titulo">
@@ -618,10 +618,11 @@ categories.forEach(categoria => {
         if(categoria==="sabanas" && coloresSabanas[i+1]){
             coloresSabanas[i+1].forEach((color, idx) => {
                 const numColor = idx + 1;
+                const claseActivo = numColor === 1 ? "activo" : "";
                 if(Array.isArray(color)){
-                    htmlColores += `<div class="color" onclick="seleccionarColor(this, '${categoria}${i+1}', ${numColor});" style="background:linear-gradient(90deg, ${color[0]} 50%, ${color[1]} 50%);"></div>`;
+                    htmlColores += `<div class="color ${claseActivo}" onclick="seleccionarColor(this, '${categoria}${i+1}', ${numColor});" style="background:linear-gradient(90deg, ${color[0]} 50%, ${color[1]} 50%);"></div>`;
                 }else{
-                    htmlColores += `<div class="color" onclick="seleccionarColor(this, '${categoria}${i+1}', ${numColor});" style="background:${color}"></div>`;
+                    htmlColores += `<div class="color ${claseActivo}" onclick="seleccionarColor(this, '${categoria}${i+1}', ${numColor});" style="background:${color}"></div>`;
                 }
             });
         }
@@ -677,7 +678,7 @@ function inicializarProducto(categoria, modeloNum) {
     const nombreProd = categoria==="sabanas" ? nombresSabanas[modeloNum] : categoria + " Modelo " + modeloNum;
     const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
     
-    // Todos los productos inician por defecto con la sub-variante "_1-1.jpeg"
+    // Al abrir el producto por primera vez, carga por defecto el Color 1 (_1-1.jpeg)
     const fotoPorDefecto = `${idProducto}_1-1.jpeg`;
 
     seleccionActual[idProducto] = {
@@ -692,11 +693,31 @@ function inicializarProducto(categoria, modeloNum) {
         imgPrincipal.src = fotoPorDefecto;
     }
 
-    // INTERFAZ DE DOS IMÁGENES: Carga automática inmediata para todos los productos utilizando "_1-1.jpeg" y "_1-2.jpeg"
+    // Reiniciar la selección visual de los círculos de colores (marcar el primero como activo)
+    const seccionProducto = document.getElementById(idProducto);
+    if(seccionProducto) {
+        const circulosColores = seccionProducto.querySelectorAll(".color");
+        circulosColores.forEach((c, idx) => {
+            if(idx === 0) c.classList.add("activo");
+            else c.classList.remove("activo");
+        });
+        
+        const botonesTalles = seccionProducto.querySelectorAll(".talle");
+        botonesTalles.forEach(t => t.classList.remove("activo"));
+    }
+
+    // Cargar miniaturas del Color 1 inmediatamente
+    actualizarMiniaturasContenedor(idProducto, 1);
+
+    mostrarPagina(idProducto);
+    actualizarBotonWhatsApp(idProducto);
+}
+
+function actualizarMiniaturasContenedor(idProducto, numColor) {
     const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
     if (contenedorMiniaturas) {
-        const rutaImagen1 = `${idProducto}_1-1.jpeg`;
-        const rutaImagen2 = `${idProducto}_1-2.jpeg`;
+        const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
+        const rutaImagen2 = `${idProducto}_${numColor}-2.jpeg`;
 
         contenedorMiniaturas.innerHTML = `
             <div class="miniatura activa" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen1}')">
@@ -707,9 +728,6 @@ function inicializarProducto(categoria, modeloNum) {
             </div>
         `;
     }
-
-    mostrarPagina(idProducto);
-    actualizarBotonWhatsApp(idProducto);
 }
 
 function mostrarPagina(id){
@@ -738,30 +756,22 @@ function seleccionarColor(elemento, idProducto, numColor){
     elemento.classList.add("activo");
 
     const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
-    const rutaImagen2 = `${idProducto}_${numColor}-2.jpeg`;
 
+    // Cambiar imagen grande
     cambiarImagenColor(idProducto, rutaImagen1);
 
     const urlBase = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || ''}`;
     seleccionActual[idProducto].fotoLink = `${urlBase}/${rutaImagen1}`;
 
-    const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
-    if (contenedorMiniaturas) {
-        contenedorMiniaturas.innerHTML = `
-            <div class="miniatura activa" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen1}')">
-                <img src="${rutaImagen1}">
-            </div>
-            <div class="miniatura" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen2}')">
-                <img src="${rutaImagen2}">
-            </div>
-        `;
-    }
+    // Actualizar dinámicamente las dos miniaturas de abajo correspondientes al color elegido
+    actualizarMiniaturasContenedor(idProducto, numColor);
     actualizarBotonWhatsApp(idProducto);
 }
 
 function clickMiniatura(elemento, idProducto, rutaImagen) {
     const contenedor = elemento.parentElement;
     contenedor.querySelectorAll(".miniatura").forEach(m => m.classList.remove("activa"));
+    elemento.className = "miniatura activa";
     elemento.classList.add("activa");
     
     cambiarImagenColor(idProducto, rutaImagen);
