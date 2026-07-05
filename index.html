@@ -591,7 +591,6 @@ function cantidadProductos(categoria){
 let htmlGenerado = "";
 
 categories.forEach(categoria => {
-    // Portada en grilla principal: Siempre busca estrictamente color 1, foto 1 (.jpeg)
     htmlGenerado += `
     <section class="pagina" id="${categoria}">
         <h2 class="titulo">
@@ -778,7 +777,7 @@ function clickMiniatura(elemento, idProducto, rutaImagen) {
 
 function seleccionarTalle(elemento, idProducto, nombreProducto, talleNombre, tallePrecio){
     const contenedor = elemento.parentElement;
-    contenedor.querySelectorAll(".talle").forEach(t => c => c.classList.remove("activo"));
+    contenedor.querySelectorAll(".talle").forEach(t => t.classList.remove("activo"));
     elemento.classList.add("activo");
 
     seleccionActual[idProducto].talle = talleNombre;
