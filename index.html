@@ -516,6 +516,7 @@ body{
 /* ========================= */
 const categories = ["sabanas", "mantas", "peluches", "acolchados", "cobertores", "toallas"];
 
+// --- SÁBANAS ---
 const nombresSabanas = {
     1:"Juego de Sábanas",
     2:"Sábana Torero",
@@ -551,6 +552,76 @@ const coloresSabanas = {
     ]
 };
 
+// --- MANTAS ---
+const nombresMantas = {
+    1: "Manta Modelo 1",
+    2: "Manta Modelo 2",
+    3: "Manta Modelo 3",
+    4: "Manta Modelo 4"
+};
+
+const tallesMantas = {
+    1: [{ nombre: "Único", precio: "0" }],
+    2: [{ nombre: "Único", precio: "0" }],
+    3: [{ nombre: "Único", precio: "0" }],
+    4: [{ nombre: "Único", precio: "0" }]
+};
+
+const coloresMantas = {
+    1: ["#8a5d6b", "#ead5cf"],
+    2: ["#8a5d6b", "#ead5cf"],
+    3: ["#8a5d6b", "#ead5cf"],
+    4: ["#8a5d6b", "#ead5cf"]
+};
+
+// --- PELUCHES CON MANTA ---
+const nombresPeluches = {};
+const tallesPeluches = {};
+const coloresPeluches = {};
+
+for(let i=1; i<=31; i++){
+    nombresPeluches[i] = "Peluche con Manta " + i;
+    tallesPeluches[i] = [{ nombre: "Único", precio: "0" }];
+    coloresPeluches[i] = ["#8a5d6b"];
+}
+
+// --- ACOLCHADOS ---
+const nombresAcolchados = {
+    1: "Acolchado Premium"
+};
+
+const tallesAcolchados = {
+    1: [
+        { nombre: "1½", precio: "0" },
+        { nombre: "Twin", precio: "0" },
+        { nombre: "Queen", precio: "0" },
+        { nombre: "King", precio: "0" }
+    ]
+};
+
+const coloresAcolchados = {
+    1: [
+        "#8a5d6b", "#ead5cf", "#2e5db0", "#89458c", "#48a828",
+        "#373837", "#a32424", "#73541f", "#17ad8a", "#bd4646"
+    ]
+};
+
+// --- COBERTORES ---
+const nombresCobertores = {
+    1: "Cobertor Modelo 1",
+    2: "Cobertor Modelo 2"
+};
+
+const tallesCobertores = {
+    1: [{ nombre: "Único", precio: "0" }],
+    2: [{ nombre: "Único", precio: "0" }]
+};
+
+const coloresCobertores = {
+    1: ["#8a5d6b", "#ead5cf"],
+    2: ["#8a5d6b", "#ead5cf"]
+};
+
 // --- TOALLAS ---
 const nombresToallas = {
     1: "Toallon Lucky",
@@ -570,18 +641,30 @@ const coloresToallas = {
 // --- FUNCIONES AUXILIARES PARA DATOS DINÁMICOS ---
 function obtenerNombreProducto(categoria, id) {
     if (categoria === "sabanas" && nombresSabanas[id]) return nombresSabanas[id];
+    if (categoria === "mantas" && nombresMantas[id]) return nombresMantas[id];
+    if (categoria === "peluches" && nombresPeluches[id]) return nombresPeluches[id];
+    if (categoria === "acolchados" && nombresAcolchados[id]) return nombresAcolchados[id];
+    if (categoria === "cobertores" && nombresCobertores[id]) return nombresCobertores[id];
     if (categoria === "toallas" && nombresToallas[id]) return nombresToallas[id];
     return categoria + " Modelo " + id;
 }
 
 function obtenerTallesProducto(categoria, id) {
     if (categoria === "sabanas" && tallesSabanas[id]) return tallesSabanas[id];
+    if (categoria === "mantas" && tallesMantas[id]) return tallesMantas[id];
+    if (categoria === "peluches" && tallesPeluches[id]) return tallesPeluches[id];
+    if (categoria === "acolchados" && tallesAcolchados[id]) return tallesAcolchados[id];
+    if (categoria === "cobertores" && tallesCobertores[id]) return tallesCobertores[id];
     if (categoria === "toallas" && tallesToallas[id]) return tallesToallas[id];
     return null;
 }
 
 function obtenerColoresProducto(categoria, id) {
     if (categoria === "sabanas" && coloresSabanas[id]) return coloresSabanas[id];
+    if (categoria === "mantas" && coloresMantas[id]) return coloresMantas[id];
+    if (categoria === "peluches" && coloresPeluches[id]) return coloresPeluches[id];
+    if (categoria === "acolchados" && coloresAcolchados[id]) return coloresAcolchados[id];
+    if (categoria === "cobertores" && coloresCobertores[id]) return coloresCobertores[id];
     if (categoria === "toallas" && coloresToallas[id]) return coloresToallas[id];
     return null;
 }
@@ -592,7 +675,7 @@ function cantidadProductos(categoria){
     if(categoria==="sabanas") return 5;
     if(categoria==="mantas") return 4;
     if(categoria==="peluches") return 31;
-    if(categoria==="acolchados") return 0;
+    if(categoria==="acolchados") return 1;
     if(categoria==="cobertores") return 2;
     if(categoria==="toallas") return 2;
     return 0;
