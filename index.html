@@ -568,16 +568,17 @@ const tallesMantas = {
 };
 
 const coloresMantas = {
-    1: ["#868687", "#13634f", "#2b2b2b", "#6b0105", "#ffffff", "#ffd6f8", "#d9c075", "#80d9ff"],
+    1: ["#8a5d6b", "#ead5cf"],
     2: ["#e88989", "#ffffff", "#9c7c5f", "#29488c"],
     3: [
         ["#525354", "#ffffff"],
-        ["#005eff", "#87ceeb"], ["#8d8e8f", "#10224a"], ["#387fa6", "#fca232"],
-        ["#53445c", "#846d91"], ["#948460", "#ab560c"], ["#6e6e6e", "#2b2b2b"],
-        ["#273b5e", "#bf6e22"], ["#804106", "#ffe1b0"], ["#181726", "#3d3d3d"],
-        ["#a6000e", "#756b6c"], ["#36374d", "#000000"], 
+        ["#005eff", "#87ceeb"], ["#005eff", "#87ceeb"], ["#005eff", "#87ceeb"],
+        ["#005eff", "#87ceeb"], ["#005eff", "#87ceeb"], ["#005eff", "#87ceeb"],
+        ["#005eff", "#87ceeb"], ["#005eff", "#87ceeb"], ["#005eff", "#87ceeb"],
+        ["#005eff", "#87ceeb"], ["#005eff", "#87ceeb"], ["#005eff", "#87ceeb"],
+        ["#005eff", "#87ceeb"]
     ], 
-    4: ["#755e39", "#4593b5"]
+    4: ["#8a5d6b", "#ead5cf"]
 };
 
 // --- PELUCHES CON MANTA ---
@@ -816,21 +817,22 @@ function inicializarProducto(categoria, modeloNum) {
     actualizarBotonWhatsApp(idProducto);
 }
 
+// FUNCIÓN DIRECTA: Muestra siempre exactamente 2 miniaturas por cada color
 function actualizarMiniaturasContenedor(idProducto, numColor) {
     const contenedorMiniaturas = document.getElementById(`miniaturas-${idProducto}`);
-    if (contenedorMiniaturas) {
-        const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
-        const rutaImagen2 = `${idProducto}_${numColor}-2.jpeg`;
+    if (!contenedorMiniaturas) return;
 
-        contenedorMiniaturas.innerHTML = `
-            <div class="miniatura activa" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen1}')">
-                <img src="${rutaImagen1}" onerror="this.src='${idProducto}_1.jpeg'">
-            </div>
-            <div class="miniatura" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen2}')">
-                <img src="${rutaImagen2}" onerror="this.src='${idProducto}_2.jpeg'">
-            </div>
-        `;
-    }
+    const rutaImagen1 = `${idProducto}_${numColor}-1.jpeg`;
+    const rutaImagen2 = `${idProducto}_${numColor}-2.jpeg`;
+
+    contenedorMiniaturas.innerHTML = `
+        <div class="miniatura activa" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen1}')">
+            <img src="${rutaImagen1}" onerror="this.src='${idProducto}_1.jpeg'">
+        </div>
+        <div class="miniatura" onclick="clickMiniatura(this, '${idProducto}', '${rutaImagen2}')">
+            <img src="${rutaImagen2}" onerror="this.src='${idProducto}_2.jpeg'">
+        </div>
+    `;
 }
 
 function mostrarPagina(id){
