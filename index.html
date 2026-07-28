@@ -63,9 +63,12 @@ body{ font-family:Arial,sans-serif; background:#f7f1ed; color:#5e4b52; overflow-
 
 .producto-container{ display:flex; gap:50px; }
 .galeria{ width:50%; }
-.imagen-principal{
-    width:100%; height:550px; background:white; border-radius:25px;
-    overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.05);
+    
+.imagen-principal img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Esto evita que se recorte y muestra la foto entera */
+    background: #f7f1ed; /* Fondo por si queda algún espacio libre */
 }
 .imagen-principal img{ width:100%; height:100%; object-fit:cover; background:#eee; }
 
