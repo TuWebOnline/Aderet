@@ -66,8 +66,8 @@ body{ font-family:Arial,sans-serif; background:#f7f1ed; color:#5e4b52; overflow-
     
 .imagen-principal {
     width: 100%;
-    height: 500px; /* Mantené la altura que ya tenés actualmente */
-    background: #f7f1ed; /* Fondo para los bordes si sobran */
+    height: 500px;
+    background: #f7f1ed;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -238,14 +238,19 @@ const nombresToallas = { 1: "Toallon Lucky", 2: "Toallas X3 Piezas" };
 const tallesToallas = { 1: [{ nombre: "Estandar", precio: "10.000" }], 2: [{ nombre: "Estandar", precio: "25.000" }] };
 const coloresToallas = { 1: ["#c27430", "#305cc2", "#c94dbd", "#41e066", "#1f1f1f", "#e03838"], 2: ["#a15727", "#1dc476", "#c41d1d", "#5c5c5c", "#2d4e91"] };
 
+function obtenerDiccionarioNombres(categoria) {
+    if (categoria === "sabanas") return nombresSabanas;
+    if (categoria === "mantas") return nombresMantas;
+    if (categoria === "peluches") return nombresPeluches;
+    if (categoria === "acolchados") return nombresAcolchados;
+    if (categoria === "cobertores") return nombresCobertores;
+    if (categoria === "toallas") return nombresToallas;
+    return {};
+}
+
 function obtenerNombreProducto(categoria, id) {
-    if (categoria === "sabanas" && nombresSabanas[id]) return nombresSabanas[id];
-    if (categoria === "mantas" && nombresMantas[id]) return nombresMantas[id];
-    if (categoria === "peluches" && nombresPeluches[id]) return nombresPeluches[id];
-    if (categoria === "acolchados" && nombresAcolchados[id]) return nombresAcolchados[id];
-    if (categoria === "cobertores" && nombresCobertores[id]) return nombresCobertores[id];
-    if (categoria === "toallas" && nombresToallas[id]) return nombresToallas[id];
-    return categoria + " Modelo " + id;
+    const dic = obtenerDiccionarioNombres(categoria);
+    return dic[id] || (categoria + " Modelo " + id);
 }
 
 function obtenerTallesProducto(categoria, id) {
@@ -268,28 +273,25 @@ function obtenerColoresProducto(categoria, id) {
     return null;
 }
 
-function cantidadProductos(categoria){
-    if(categoria==="sabanas") return 5;
-    if(categoria==="mantas") return 4;
-    if(categoria==="peluches") return 26;
-    if(categoria==="acolchados") return 1;
-    if(categoria==="cobertores") return 2;
-    if(categoria==="toallas") return 2;
-    return 0;
+// Obtiene los IDs reales existentes para no romper la app si borrás alguno
+function obtenerIdsExistentes(categoria) {
+    const dic = obtenerDiccionarioNombres(categoria);
+    return Object.keys(dic).map(Number);
 }
 
 let seleccionActual = {};
 let htmlGenerado = "";
 
 categories.forEach(categoria => {
+    const idsExistentes = obtenerIdsExistentes(categoria);
+
     htmlGenerado += `
     <section class="pagina" id="${categoria}">
         <h2 class="titulo">
             ${categoria==="peluches" ? "Peluches con manta" : categoria.charAt(0).toUpperCase() + categoria.slice(1)}
         </h2>
         <div class="grid">
-            ${Array.from({length:cantidadProductos(categoria)}, (_,i)=>{
-                const idProd = i + 1;
+            ${idsExistentes.map(idProd => {
                 const nombreItem = obtenerNombreProducto(categoria, idProd);
                 return `
                 <div class="producto" onclick="inicializarProducto('${categoria}', ${idProd})">
@@ -304,14 +306,13 @@ categories.forEach(categoria => {
     </section>
     `;
 
-    for(let i=0; i<cantidadProductos(categoria); i++){
-        const idProd = i + 1;
+    idsExistentes.forEach(idProd => {
         const nombreProductoActual = obtenerNombreProducto(categoria, idProd);
         const fotoInicialExpositor = `${categoria}${idProd}_1-1.jpeg`;
         const listaColores = obtenerColoresProducto(categoria, idProd);
         
         let htmlColores = "";
-        if(listaColores){
+        if(listaColores && listaColores.length > 0){
             listaColores.forEach((color, idx) => {
                 const numColor = idx + 1;
                 const claseActivo = numColor === 1 ? "activo" : "";
@@ -352,7 +353,7 @@ categories.forEach(categoria => {
                             `).join("")}
                         </div>
                     ` : ""}
-                    ${listaColores ? `
+                    ${htmlColores ? `
                         <div class="subtitulo">Colores</div>
                         <div class="colores">
                             ${htmlColores}
@@ -365,7 +366,7 @@ categories.forEach(categoria => {
             </div>
         </section>
         `;
-    }
+    });
 });
 
 document.getElementById("contenedorPrincipal").insertAdjacentHTML('beforeend', htmlGenerado);
