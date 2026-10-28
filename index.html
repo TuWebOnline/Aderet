@@ -473,14 +473,9 @@ function cambiarImagenColor(idPagina, nuevaRuta) {
 }
 
 function actualizarBotonWhatsApp(idProducto) {
+    
     const datos = seleccionActual[idProducto];
     if(!datos) return;
-
-    const imgElement = document.getElementById(`img-principal-${idProducto}`);
-    let nombreFotoCompleta = "No especificado";
-    if(imgElement && imgElement.src) {
-        nombreFotoCompleta = imgElement.src.substring(imgElement.src.lastIndexOf('/') + 1);
-    }
 
     let texto = `¡Hola! Quiero más información sobre el producto:\n\n`;
     texto += `*Producto:* ${datos.nombre}\n`;
@@ -492,8 +487,7 @@ function actualizarBotonWhatsApp(idProducto) {
         texto += `*Precio:* Consultar talle\n`;
     }
     
-    texto += `*Color seleccionado:* Archivo ${nombreFotoCompleta}\n\n`;
-    texto += `Ver en la tienda: ${window.location.href}`;
+    texto += `\nVer en la tienda: ${window.location.href}`;
 
     const botonWa = document.getElementById(`btn-wa-${idProducto}`);
     if(botonWa) {
