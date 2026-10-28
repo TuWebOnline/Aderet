@@ -285,23 +285,34 @@ let htmlGenerado = "";
 categories.forEach(categoria => {
     const idsExistentes = obtenerIdsExistentes(categoria);
 
+    let contenidoGrid = "";
+    if (idsExistentes.length === 0) {
+        contenidoGrid = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; font-size: 24px; color: #8a5d6b;">
+                No hay productos disponibles 😢
+            </div>
+        `;
+    } else {
+        contenidoGrid = idsExistentes.map(idProd => {
+            const nombreItem = obtenerNombreProducto(categoria, idProd);
+            return `
+            <div class="producto" onclick="inicializarProducto('${categoria}', ${idProd})">
+                <img src="${categoria}${idProd}_1-1.jpeg">
+                <div class="info">
+                    <h3>${nombreItem}</h3>
+                </div>
+            </div>
+            `;
+        }).join("");
+    }
+
     htmlGenerado += `
     <section class="pagina" id="${categoria}">
         <h2 class="titulo">
             ${categoria==="peluches" ? "Peluches con manta" : categoria.charAt(0).toUpperCase() + categoria.slice(1)}
         </h2>
         <div class="grid">
-            ${idsExistentes.map(idProd => {
-                const nombreItem = obtenerNombreProducto(categoria, idProd);
-                return `
-                <div class="producto" onclick="inicializarProducto('${categoria}', ${idProd})">
-                    <img src="${categoria}${idProd}_1-1.jpeg">
-                    <div class="info">
-                        <h3>${nombreItem}</h3>
-                    </div>
-                </div>
-                `;
-            }).join("")}
+            ${contenidoGrid}
         </div>
     </section>
     `;
